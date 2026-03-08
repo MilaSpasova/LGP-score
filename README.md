@@ -55,12 +55,26 @@ LGP-score/
 
 The **MRC database** provides psycholinguistic variables for English words (e.g. Age of Acquisition, Concreteness, Imageability, Familiarity). The script:
 
-- Loads the dataset from Hugging Face: `StephanAkkerman/MRC-psycholinguistic-database`
-- Normalises column names (e.g. `age of acquisition` → `aoa`, `concreteness` → `conc`)
-- Cleans the `word` column and converts numeric fields
-- Drops rows with no usable ratings
+- Loads the dataset from Hugging Face: `StephanAkkerman/MRC-psycholinguistic-database` (train split).
+- Normalises column names and renames key ones using a fixed mapping, e.g.:
+  - `age of acquisition` → `aoa`
+  - `concreteness` → `conc`
+  - `imageability` → `img`
+  - `familiarity` → `fam`
+  - `kf written frequency` → `kf_freq`
+- Cleans the `word` column (removes `&`, strips whitespace).
+- Converts psycholinguistic columns to numeric, treating `0` as missing.
+- Drops rows where **all** of `fam`, `conc`, and `img` are missing (so every retained word has at least one rating).
 
-**Usage:** Run `python setup_mrc_database.py` to test the load. The returned DataFrame is intended for use in the LGP pipeline (e.g. mapping tokens to AoA/conc/img for scoring).
+Under the hood the main entrypoint is:
+
+```python
+from setup_mrc_database import setup_mrc_database
+
+mrc_df = setup_mrc_database()
+```
+
+**CLI usage:** Run `python setup_mrc_database.py` to test the load and see a small preview of words with complete `fam`/`conc`/`img` ratings. The returned DataFrame is intended for use in the LGP pipeline (e.g. mapping tokens to AoA/conc/img for scoring).
 
 ### 2. OneStopEnglish corpus (`setup_onestop_english.py`)
 
