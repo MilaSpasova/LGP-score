@@ -7,3 +7,6 @@ openai
 google-generativeai
 google-genai
 python-dotenv
+matplotlib
+seaborn
+ipywidgets

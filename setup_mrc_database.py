@@ -21,7 +21,9 @@ MRC_COLUMN_MAP: dict[str, str] = {
     "familiarity": "fam",
     "concreteness": "conc",
     "imageability": "img",
+    # Dataset variants have used multiple AoA column names over time.
     "age of acquisition": "aoa",
+    "age of acquisition rating": "aoa",
     "number of letters": "nlet",
 }
 
