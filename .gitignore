@@ -1,2 +1,4 @@
 venv
 .env
+# Local clone of OneStopEnglishCorpus (see onestop_english_exploration.ipynb)
+data/

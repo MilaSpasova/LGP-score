@@ -1,24 +1,11 @@
 from __future__ import annotations
 
 import os
-from typing import Optional
 
 from dotenv import load_dotenv
 
-try:
-    from google import genai  # type: ignore[import-not-found]
-except ModuleNotFoundError:
-    genai = None  # type: ignore[assignment]
-
-deprecated_genai = None  # type: ignore[assignment]
-if genai is None:
-    try:
-        import google.generativeai as deprecated_genai  # type: ignore[import-not-found]
-    except ModuleNotFoundError:
-        deprecated_genai = None  # type: ignore[assignment]
-
-
-from .prompts import PromptStrategy, build_simplification_prompt
+from .openrouter import chat_completion_text, extract_simplified_json
+from .prompts import PromptStrategy, build_simplification_messages
 
 
 def simplify_with_gemini(
@@ -26,40 +13,36 @@ def simplify_with_gemini(
     text: str,
     target_level: str,
     strategy: PromptStrategy = "zero_shot",
-    model: str = "gemini-3.1-pro-preview",
-    api_key_env: str = "GOOGLE_API_KEY",
+    model: str = "google/gemini-2.5-pro-preview",
+    api_key_env: str = "OPENROUTER_API_KEY",
+    temperature: float | None = None,
+    timeout_s: float = 60.0,
+    json_object: bool = True,
 ) -> str:
     """
-    Simplify `text` using a Gemini model (Gemini 3 / 3.1).
+    Simplify `text` using a Google Gemini model via OpenRouter.
 
-    Requires environment variable GOOGLE_API_KEY (or `api_key_env`).
+    Uses the same chat message format as the OpenAI path. Requires
+    OPENROUTER_API_KEY (or `api_key_env`). Model IDs follow OpenRouter
+    (e.g. ``google/gemini-2.5-pro-preview``).
+
+    When ``json_object`` is True (default), uses API JSON mode and parses
+    ``{"simplified": "..."}``. Set False if the model rejects ``response_format``.
     """
     load_dotenv()
-    api_key = os.getenv(api_key_env) or os.getenv("GEMINI_API_KEY")
+    api_key = os.getenv(api_key_env)
     if not api_key:
-        raise RuntimeError(f"Missing API key env var: {api_key_env} (or GEMINI_API_KEY)")
+        raise RuntimeError(f"Missing API key env var: {api_key_env}")
 
-    prompt = build_simplification_prompt(text=text, target_level=target_level, strategy=strategy)
-
-    out: Optional[str] = None
-
-    if genai is not None:
-        client = genai.Client(api_key=api_key)
-        resp = client.models.generate_content(model=model, contents=prompt)
-        out = getattr(resp, "text", None)
-    elif deprecated_genai is not None:
-        deprecated_genai.configure(api_key=api_key)
-        m = deprecated_genai.GenerativeModel(model_name=model)
-        resp = m.generate_content(prompt)
-        out = getattr(resp, "text", None)
-    else:  # pragma: no cover
-        raise ModuleNotFoundError(
-            "Missing dependency for Gemini. Install project requirements first:\n"
-            "  python -m pip install -r requirements.txt"
-        )
-
-    if not out or not out.strip():
-        raise RuntimeError("Gemini returned empty content.")
-
-    return out.strip()
-
+    messages = build_simplification_messages(
+        text=text, target_level=target_level, strategy=strategy, json_object=json_object
+    )
+    raw = chat_completion_text(
+        api_key=api_key,
+        model=model,
+        messages=messages,
+        temperature=temperature,
+        timeout_s=timeout_s,
+        response_format={"type": "json_object"} if json_object else None,
+    )
+    return extract_simplified_json(raw) if json_object else raw

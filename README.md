@@ -9,9 +9,9 @@ Traditional text simplification often focuses solely on readability, potentially
 
 ## 🛠 Tech Stack & Methodology
 - **Language:** Python 3.x
-- **Models:** GPT-5.2, Gemini 3
+- **Models:** OpenRouter (OpenAI + Google Gemini model IDs, e.g. `openai/gpt-5.2`, `google/gemini-2.5-pro-preview`)
 - **Corpora:** Newsela, OneStopEnglish
-- **Psycholinguistic Databases:** MRC Psycholinguistic Database, AoA norms (Kuperman et al.)
+- **Psycholinguistic Databases:** MRC Psycholinguistic Database (AoA and related norms in MRC where available)
 
 ### Key Features
 * **LGP Scoring Pipeline:** A custom Python engine that tokenizes text and cross-references tokens with psycholinguistic variables:
@@ -41,14 +41,17 @@ LGP-score/
 ├── .gitignore
 │
 ├── setup_mrc_database.py     # Loads and cleans the MRC psycholinguistic database
-├── setup_onestop_english.py  # Loads the OneStopEnglish corpus from Hugging Face
-├── run_batch_onestop_english.py  # Runs OpenAI + Gemini on OSE texts, saves CSV
+├── setup_onestop_english.py  # OneStopEnglish: official aligned corpus on disk only
+├── onestop_english_exploration.ipynb  # EDA: official aligned corpus (local clone required)
+├── mrc_exploration.ipynb
+├── run_onestop_english.py    # CLI: batch / experiments / smoke (OpenRouter OpenAI + Gemini)
 │
 └── llm_api/                  # LLM integration for text simplification
     ├── __init__.py
     ├── prompts.py            # Zero-shot, Few-shot, Chain-of-Thought templates
-    ├── openai_client.py      # GPT-5.2 (or newer) via OpenAI API
-    └── gemini_client.py      # Gemini 3 / 3.1 via Google API
+    ├── openrouter.py         # OpenAI SDK → OpenRouter Chat Completions
+    ├── openai_client.py      # ChatGPT-class models via OpenRouter (`openai/...`)
+    └── gemini_client.py      # Gemini via OpenRouter (`google/...`)
 ```
 
 ### 1. MRC psycholinguistic database (`setup_mrc_database.py`)
@@ -78,22 +81,46 @@ mrc_df = setup_mrc_database()
 
 ### 2. OneStopEnglish corpus (`setup_onestop_english.py`)
 
-**OneStopEnglish** is a corpus of human-simplified texts at three reading levels (Elementary, Intermediate, Advance). It serves as the human benchmark for comparing LLM simplifications.
+**OneStopEnglish** is used here only from the **official** [OneStopEnglishCorpus](https://github.com/nishkalavallabhi/OneStopEnglishCorpus): folder **`Texts-Together-OneCSVperFile`** (or the repo root), **189 articles × 3 aligned levels**. There is **no** Hugging Face fallback in this repo.
 
-- **Source:** Hugging Face `SetFit/onestop_english` (567 texts: 192 train + 375 test)
-- **Columns in the returned DataFrame:** `text`, `level` (name), `level_id` (0/1/2), `split` (train/test)
+**Loader:** `load_onestop_english_aligned(corpus_dir)` — returns a DataFrame with columns `text`, `level`, `level_id` (0/1/2), `split` (always `aligned`), and `story_id` (one per article). The CSV column **Advanced** is stored as level **Advance**.
 
-**Usage:** Run `python setup_onestop_english.py` to preview the data, or import and call `load_onestop_english()` from your own scripts.
+**Resolving the corpus directory** (same rules for `python setup_onestop_english.py` and `run_onestop_english.py batch`):
+
+1. Explicit path: first CLI argument to `setup_onestop_english.py`, or `--aligned-corpus DIR` for `batch`.
+2. Else environment variable **`OSE_CORPUS_ROOT`** (must be an existing directory).
+3. Else **`./data/OneStopEnglishCorpus`** under the current working directory, if that folder exists.
+
+If nothing resolves, the CLI prints an error with clone instructions.
+
+**Clone the corpus** (not in git):
+
+```bash
+git clone https://github.com/nishkalavallabhi/OneStopEnglishCorpus.git data/OneStopEnglishCorpus
+```
+
+**Exploration notebook:** [`onestop_english_exploration.ipynb`](onestop_english_exploration.ipynb) sets `OSE_CORPUS_ROOT` to `data/OneStopEnglishCorpus` by default. Open Jupyter with the project folder as the working directory, or change that variable in the notebook to your clone path.
+
+**CLI preview:** From the project root with the clone in place:
+
+```bash
+python setup_onestop_english.py
+```
+
+Or: `python setup_onestop_english.py /path/to/OneStopEnglishCorpus`
+
+**In code:** `from setup_onestop_english import load_onestop_english_aligned, resolve_onestop_corpus_dir`.
 
 ### 3. LLM API clients (`llm_api/`)
 
-Two providers are integrated so you can generate **AI-simplified** versions of texts and compare them to human-simplified ones.
+Both simplification tracks use **[OpenRouter](https://openrouter.ai/)**’s OpenAI-compatible Chat Completions API, so one key can route to OpenAI-hosted and Google-hosted models.
 
 | File | Purpose |
 |------|--------|
-| `prompts.py` | Builds the simplification prompt for a given **strategy** (see below). Used by both clients. |
-| `openai_client.py` | Calls the OpenAI Chat Completions API (default model: `gpt-5.2-chat-latest`). Needs `OPENAI_API_KEY`. |
-| `gemini_client.py` | Calls the Gemini API (default: `gemini-3.1-pro-preview`). Uses `google-genai` if available; falls back to `google-generativeai`. Needs `GOOGLE_API_KEY` or `GEMINI_API_KEY`. |
+| `prompts.py` | Builds chat messages for a given **strategy** (see below). Used by both clients. |
+| `openrouter.py` | Base URL `https://openrouter.ai/api/v1`, optional `OPENROUTER_HTTP_REFERER` / `OPENROUTER_APP_TITLE`. |
+| `openai_client.py` | Default model `openai/gpt-5.2` (override with any OpenRouter `openai/...` id). Needs `OPENROUTER_API_KEY`. |
+| `gemini_client.py` | Default model `google/gemini-2.5-pro-preview` (override with any OpenRouter `google/...` id). Same key. |
 
 **Prompt strategies** (thesis-relevant):
 
@@ -110,36 +137,47 @@ from llm_api.gemini_client import simplify_with_gemini
 text = "The committee convened to deliberate on the proposal."
 level = "Elementary"
 
-# OpenAI (GPT-5.2 or newer)
+# OpenAI track on OpenRouter
 simple_openai = simplify_with_openai(text=text, target_level=level, strategy="zero_shot")
 
-# Gemini (3 or 3.1)
+# Gemini track on OpenRouter
 simple_gemini = simplify_with_gemini(text=text, target_level=level, strategy="zero_shot")
 ```
 
-### 4. Batch script (`run_batch_onestop_english.py`)
+### 4. OneStopEnglish CLI (`run_onestop_english.py`)
 
-This script runs the **OneStopEnglish** corpus through one or both LLMs and writes a CSV with source text, level, provider, model, strategy, and the simplified output (or error).
+Subcommands:
 
-**What it does:**
+| Subcommand | Purpose |
+|------------|--------|
+| `batch` | Run the corpus through one or both LLMs; one row per (source text × provider) in a CSV. |
+| `experiments` | Grid over strategies and temperatures for **aligned Advanced** texts only (requires `--aligned-corpus`). Default CSV: `outputs/onestop_english_advanced_experiments.csv`. |
+| `smoke` | Quick OpenRouter check: one short call on each track (replaces a separate test script). |
 
-1. Loads OneStopEnglish (train + test).
-2. Optionally limits the number of texts (`--limit`).
-3. For each text, calls OpenAI and/or Gemini (with retries).
-4. Writes one row per (source text × provider) to a CSV (default: `outputs/onestop_english_simplifications.csv`).
+**`batch` — what it does**
 
-**Options:**
+1. Resolves the corpus directory (`--aligned-corpus`, then `OSE_CORPUS_ROOT`, then `./data/OneStopEnglishCorpus`).
+2. Loads aligned rows via `load_onestop_english_aligned`.
+3. Optionally limits rows (`--limit`).
+4. For each text, calls the OpenAI and/or Gemini **OpenRouter** tracks (with retries).
+5. Writes to a CSV (default: `outputs/onestop_english_simplifications.csv`).
+
+**`batch` options:**
 
 | Option | Meaning |
 |--------|--------|
 | `--provider` | `openai`, `gemini`, or `both` |
 | `--strategy` | `zero_shot`, `few_shot`, or `chain_of_thought` |
-| `--limit N` | Process only the first N texts (0 = all 567) |
-| `--openai-model` | e.g. `gpt-5.2-chat-latest` |
-| `--gemini-model` | e.g. `gemini-3.1-pro-preview` |
+| `--limit N` | Process only the first N texts (0 = all rows, 189 × 3 = 567) |
+| `--openai-model` | OpenRouter id, e.g. `openai/gpt-5.2` |
+| `--gemini-model` | OpenRouter id, e.g. `google/gemini-2.5-pro-preview` |
 | `--output` | Output CSV path |
+| `--temperature` | Optional sampling temperature |
 | `--max-retries` | Retries per API call on failure |
 | `--base-sleep-s` | Base delay for exponential backoff |
+| `--aligned-corpus DIR` | Override corpus root; otherwise env / default path (see §2) |
+
+Run `python run_onestop_english.py experiments -h` for the full experiment grid flags (`--strategies`, `--temperatures`, etc.).
 
 ---
 
@@ -163,28 +201,38 @@ This script runs the **OneStopEnglish** corpus through one or both LLMs and writ
    python -m pip install -r requirements.txt
    ```
 
-4. **Configure API keys:** Copy `.env.example` to `.env` and set your keys:
+4. **Configure API keys:** Copy `.env.example` to `.env` and set your [OpenRouter](https://openrouter.ai/) key:
    ```
-   OPENAI_API_KEY=sk-...
-   GOOGLE_API_KEY=...
+   OPENROUTER_API_KEY=sk-or-v1-...
    ```
-   (Gemini also accepts `GEMINI_API_KEY`.)
+   Optionally set `OPENROUTER_HTTP_REFERER` and `OPENROUTER_APP_TITLE` for OpenRouter rankings.
 
 5. **Quick checks:**
+   - MRC (needs internet for Hugging Face):
+     ```bash
+     python setup_mrc_database.py
+     ```
+   - OneStopEnglish (needs local clone under `data/OneStopEnglishCorpus`, or set `OSE_CORPUS_ROOT` / pass a path):
+     ```bash
+     python setup_onestop_english.py
+     ```
+
+   Optional OpenRouter check (needs `OPENROUTER_API_KEY` in `.env`):
    ```bash
-   python setup_mrc_database.py
-   python setup_onestop_english.py
+   python run_onestop_english.py smoke
    ```
 
-6. **Run a small batch** (e.g. 5 texts, both providers):
+6. **OneStop English exploration notebook:** Clone the official corpus (see §2), then run [`onestop_english_exploration.ipynb`](onestop_english_exploration.ipynb) with the project as the working directory.
+
+7. **Run a small batch** (e.g. 5 rows, both providers; corpus path resolved like §2):
    ```bash
-   python run_batch_onestop_english.py --provider both --strategy zero_shot --limit 5
+   python run_onestop_english.py batch --provider both --strategy zero_shot --limit 5
    ```
    Output is written to `outputs/onestop_english_simplifications.csv`.
 
-7. **Run full comparison** (all 567 texts, both LLMs):
+8. **Run full batch** (all aligned rows, both LLMs):
    ```bash
-   python run_batch_onestop_english.py --provider both --limit 0
+   python run_onestop_english.py batch --provider both --limit 0
    ```
    This will take a while and use API credits; use `--limit` for testing first.
 
@@ -193,7 +241,7 @@ This script runs the **OneStopEnglish** corpus through one or both LLMs and writ
 ## Data flow (high level)
 
 1. **Human benchmark:** OneStopEnglish gives you texts already simplified by humans at three levels.
-2. **AI simplifications:** The same (or similar) source content can be sent to GPT-5.2 and Gemini with a target level and strategy; the batch script does this for every OSE text.
+2. **AI simplifications:** The same (or similar) source content can be sent through OpenRouter to ChatGPT-class and Gemini models with a target level and strategy; `run_onestop_english.py batch` (or `experiments`) does this at scale.
 3. **LGP pipeline (planned):** Tokenise both human- and AI-simplified texts, map words to the MRC database (AoA, concreteness, imageability), then compute LGP scores to compare how much “growth potential” (i+1) each version retains.
 
 The current code covers loading MRC, loading OneStopEnglish, calling both LLMs with configurable strategies, and saving batch results; the actual LGP scoring and dashboard are to be added on top of this.

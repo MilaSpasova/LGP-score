@@ -1,19 +1,10 @@
 from __future__ import annotations
 
 import os
-from typing import Optional
 
 from dotenv import load_dotenv
 
-try:
-    from openai import OpenAI
-except ModuleNotFoundError as e:  # pragma: no cover
-    raise ModuleNotFoundError(
-        "Missing dependency 'openai'. Install project requirements first:\n"
-        "  python -m pip install -r requirements.txt"
-    ) from e
-
-
+from .openrouter import chat_completion_text, extract_simplified_json
 from .prompts import PromptStrategy, build_simplification_messages
 
 
@@ -22,34 +13,36 @@ def simplify_with_openai(
     text: str,
     target_level: str,
     strategy: PromptStrategy = "zero_shot",
-    model: str = "gpt-5.2-chat-latest",
-    api_key_env: str = "OPENAI_API_KEY",
+    model: str = "openai/gpt-5.2",
+    api_key_env: str = "OPENROUTER_API_KEY",
+    temperature: float | None = None,
     timeout_s: float = 60.0,
+    json_object: bool = True,
 ) -> str:
     """
-    Simplify `text` using an OpenAI chat model (GPT-5.2 or newer).
+    Simplify `text` using an OpenAI chat model via OpenRouter.
 
-    Requires environment variable OPENAI_API_KEY (or `api_key_env`).
+    Requires environment variable OPENROUTER_API_KEY (or `api_key_env`).
+    Model IDs follow OpenRouter (e.g. ``openai/gpt-5.2``, ``openai/gpt-4o``).
+
+    When ``json_object`` is True (default), uses API JSON mode and parses
+    ``{"simplified": "..."}`` so the returned string is always the passage only.
+    Set False if the model rejects ``response_format`` or you need plain text.
     """
     load_dotenv()
     api_key = os.getenv(api_key_env)
     if not api_key:
         raise RuntimeError(f"Missing API key env var: {api_key_env}")
 
-    client = OpenAI(api_key=api_key, timeout=timeout_s)
-    messages = build_simplification_messages(text=text, target_level=target_level, strategy=strategy)
-
-    resp = client.chat.completions.create(
+    messages = build_simplification_messages(
+        text=text, target_level=target_level, strategy=strategy, json_object=json_object
+    )
+    raw = chat_completion_text(
+        api_key=api_key,
         model=model,
         messages=messages,
+        temperature=temperature,
+        timeout_s=timeout_s,
+        response_format={"type": "json_object"} if json_object else None,
     )
-
-    content: Optional[str] = None
-    if resp.choices and resp.choices[0].message:
-        content = resp.choices[0].message.content
-
-    if not content or not content.strip():
-        raise RuntimeError("OpenAI returned empty content.")
-
-    return content.strip()
-
+    return extract_simplified_json(raw) if json_object else raw

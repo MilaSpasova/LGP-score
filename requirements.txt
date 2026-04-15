@@ -4,8 +4,6 @@ pandas>=2.0.0
 numpy>=1.24.0
 ipykernel
 openai
-google-generativeai
-google-genai
 python-dotenv
 matplotlib
 seaborn

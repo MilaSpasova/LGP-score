@@ -13,6 +13,16 @@ _SYSTEM_INSTRUCTIONS = (
     "Keep names, numbers, and key entities consistent."
 )
 
+# JSON mode: OpenAI-style APIs require the word "JSON" in the prompt when using json_object response_format.
+_SYSTEM_INSTRUCTIONS_JSON = (
+    "You simplify English texts for learners. "
+    "Preserve the original meaning and factual content. Do not add new facts. "
+    "Keep names, numbers, and key entities consistent. "
+    "Respond with valid JSON only: one object with a single key \"simplified\" (a string) "
+    "whose value is the simplified passage. No markdown, no code fences, no other keys. "
+    "The simplified string must not include labels like 'Simplified:' — only the passage text."
+)
+
 _FEW_SHOT_EXAMPLES = (
     "Example:\n"
     "Original: The committee convened to deliberate on the proposal.\n"
@@ -22,30 +32,53 @@ _FEW_SHOT_EXAMPLES = (
     "Simplified: The long dry period greatly reduced how much food farms produced.\n"
 )
 
+_FEW_SHOT_EXAMPLES_JSON = (
+    "Example JSON object:\n"
+    '{"simplified": "The group met to talk about the plan."}\n'
+    "for original: The committee convened to deliberate on the proposal.\n\n"
+    "Example JSON object:\n"
+    '{"simplified": "The long dry period greatly reduced how much food farms produced."}\n'
+    "for original: The drought severely impacted agricultural output.\n"
+)
+
 
 def build_simplification_messages(
-    *, text: str, target_level: str, strategy: PromptStrategy
+    *,
+    text: str,
+    target_level: str,
+    strategy: PromptStrategy,
+    json_object: bool = True,
 ) -> list[dict[str, str]]:
+    system = _SYSTEM_INSTRUCTIONS_JSON if json_object else _SYSTEM_INSTRUCTIONS
+
     if strategy == "zero_shot":
         user = f"Simplify the text for reading level: {target_level}.\n\nTEXT:\n{text}"
-        return [{"role": "system", "content": _SYSTEM_INSTRUCTIONS}, {"role": "user", "content": user}]
+        if json_object:
+            user += '\n\nReturn JSON: {"simplified": "<your simplified text here>"}'
+        return [{"role": "system", "content": system}, {"role": "user", "content": user}]
 
     if strategy == "few_shot":
+        examples = _FEW_SHOT_EXAMPLES_JSON if json_object else _FEW_SHOT_EXAMPLES
         user = (
-            f"{_FEW_SHOT_EXAMPLES}\n\n"
+            f"{examples}\n\n"
             f"Now simplify the next text for reading level: {target_level}.\n\n"
             f"TEXT:\n{text}"
         )
-        return [{"role": "system", "content": _SYSTEM_INSTRUCTIONS}, {"role": "user", "content": user}]
+        if json_object:
+            user += '\n\nReturn JSON: {"simplified": "<your simplified text here>"}'
+        return [{"role": "system", "content": system}, {"role": "user", "content": user}]
 
     if strategy == "chain_of_thought":
         user = (
             f"Simplify the text for reading level: {target_level}.\n"
             "First, silently identify hard words/phrases and simplify sentence structure. "
-            "Then output ONLY the final simplified text.\n\n"
-            f"TEXT:\n{text}"
         )
-        return [{"role": "system", "content": _SYSTEM_INSTRUCTIONS}, {"role": "user", "content": user}]
+        if json_object:
+            user += 'Then respond with JSON only: {"simplified": "<final simplified passage>"}.\n\n'
+        else:
+            user += "Then output ONLY the final simplified text.\n\n"
+        user += f"TEXT:\n{text}"
+        return [{"role": "system", "content": system}, {"role": "user", "content": user}]
 
     raise ValueError(f"Unknown strategy: {strategy}")
 
