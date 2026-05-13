@@ -14,9 +14,13 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 import streamlit.components.v1 as components
+GSPREAD_IMPORT_ERROR = ""
 try:
     import gspread
 except ModuleNotFoundError:  # pragma: no cover - optional during local setup
+    import traceback
+
+    GSPREAD_IMPORT_ERROR = traceback.format_exc()
     gspread = None  # type: ignore[assignment]
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -337,7 +341,8 @@ def get_gspread_client() -> gspread.Client | None:
 
 def append_dataframe_to_google_sheet(sheet_name: str, frame: pd.DataFrame) -> tuple[bool, str]:
     if gspread is None:
-        return False, "gspread_not_installed"
+        detail = GSPREAD_IMPORT_ERROR.strip().splitlines()[-1] if GSPREAD_IMPORT_ERROR.strip() else "gspread_not_installed"
+        return False, f"gspread_not_installed: {detail}"
     sheet_id = get_google_sheet_id()
     client = get_gspread_client()
     if not sheet_id or client is None or frame.empty:
