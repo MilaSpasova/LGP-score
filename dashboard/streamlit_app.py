@@ -748,15 +748,16 @@ def render_text_review(study_items: list[dict[str, object]]) -> None:
 
     st.write("")
     st.markdown("### Your choice")
+    st.caption("* Required")
     st.radio(
-        "Which simplified version would you be most likely to use with students?",
+        "Which simplified version would you be most likely to use with students? *",
         ["", *version_labels],
         key=f"preferred_{story_key}",
         format_func=lambda value: "Select one option" if value == "" else value,
         on_change=partial(save_story_response, story_key),
     )
     st.text_area(
-        "Why did you choose that version?",
+        "Why did you choose that version? *",
         key=f"reason_{story_key}",
         height=120,
         placeholder="You can mention things like clarity, word choice, tone, or what felt easiest to understand.",
@@ -801,6 +802,7 @@ def render_questionnaire(study_items: list[dict[str, object]]) -> None:
     st.markdown(
         "This last step asks about how easy the activity was and how comfortable you felt making your choices."
     )
+    st.caption("* Required")
 
     st.text_input("Name or initials (optional)", key="q_name", on_change=save_questionnaire_draft)
     st.text_input("Teaching context or subject area (optional)", key="q_context", on_change=save_questionnaire_draft)
@@ -808,7 +810,7 @@ def render_questionnaire(study_items: list[dict[str, object]]) -> None:
     st.markdown("### Quick questions")
     for item in QUESTIONNAIRE_ITEMS:
         st.radio(
-            item["prompt"],
+            f"{item['prompt']} *",
             list(LIKERT_OPTIONS.keys()),
             key=f"questionnaire_{item['id']}",
             format_func=lambda value: LIKERT_OPTIONS[value],
@@ -818,7 +820,7 @@ def render_questionnaire(study_items: list[dict[str, object]]) -> None:
     st.markdown("### Final comments")
     for item in OPEN_QUESTIONS:
         st.text_area(
-            item["prompt"],
+            f"{item['prompt']} *",
             key=f"questionnaire_{item['id']}",
             height=110,
             on_change=save_questionnaire_draft,
@@ -859,7 +861,6 @@ def render_questionnaire(study_items: list[dict[str, object]]) -> None:
 
     if st.session_state.get("questionnaire_saved"):
         st.success("Thank you. Your responses have been saved.")
-        st.caption(f"Saved to: {st.session_state.get('saved_path', '')}")
         st.info("This session has already been submitted. Further submissions are disabled.")
         google_status = st.session_state.get("google_sheets_status", {})
         if google_status:
