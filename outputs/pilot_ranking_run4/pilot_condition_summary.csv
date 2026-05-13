@@ -1,0 +1,10 @@
+provider,model,strategy,temperature,variant,rows,json_success_rate,fk_grade_mean,fk_grade_std
+openai,openai/gpt-5.2,chain_of_thought,0.0,openai::openai/gpt-5.2::chain_of_thought::temp=0.0,12,1.0,6.748298453259298,1.3103021970742215
+openai,openai/gpt-5.2,chain_of_thought,0.2,openai::openai/gpt-5.2::chain_of_thought::temp=0.2,12,1.0,6.646893785004823,1.2977654317678022
+openai,openai/gpt-5.2,chain_of_thought,0.5,openai::openai/gpt-5.2::chain_of_thought::temp=0.5,12,1.0,6.805230207436259,1.4690134994608826
+openai,openai/gpt-5.2,few_shot,0.0,openai::openai/gpt-5.2::few_shot::temp=0.0,12,1.0,6.328962828109212,1.3471317579300517
+openai,openai/gpt-5.2,few_shot,0.2,openai::openai/gpt-5.2::few_shot::temp=0.2,12,1.0,6.3554733100232985,1.4704335474842753
+openai,openai/gpt-5.2,few_shot,0.5,openai::openai/gpt-5.2::few_shot::temp=0.5,12,1.0,6.3432003436076245,1.4567441885151957
+openai,openai/gpt-5.2,zero_shot,0.0,openai::openai/gpt-5.2::zero_shot::temp=0.0,12,1.0,6.566803993796806,1.2523332170327506
+openai,openai/gpt-5.2,zero_shot,0.2,openai::openai/gpt-5.2::zero_shot::temp=0.2,12,1.0,6.475383584317677,1.4299372503258299
+openai,openai/gpt-5.2,zero_shot,0.5,openai::openai/gpt-5.2::zero_shot::temp=0.5,12,1.0,6.604212663761037,1.4806202906264472

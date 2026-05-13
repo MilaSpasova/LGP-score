@@ -13,7 +13,8 @@ _SYSTEM_INSTRUCTIONS = (
     "Keep names, numbers, and key entities consistent."
 )
 
-# JSON mode: OpenAI-style APIs require the word "JSON" in the prompt when using json_object response_format.
+# JSON mode: OpenAI-style APIs require the word "JSON" in the prompt when
+# using json_object response_format.
 _SYSTEM_INSTRUCTIONS_JSON = (
     "You simplify English texts for learners. "
     "Preserve the original meaning and factual content. Do not add new facts. "
@@ -23,22 +24,30 @@ _SYSTEM_INSTRUCTIONS_JSON = (
     "The simplified string must not include labels like 'Simplified:' — only the passage text."
 )
 
+# These examples are external human simplifications adapted from held-out
+# sentence pairs in the ASSET dataset (Alva-Manchego et al., ACL 2020:
+# https://aclanthology.org/2020.acl-main.424/; release:
+# https://github.com/facebookresearch/asset). They are intentionally not
+# sampled from the OneStopEnglish evaluation corpus, which avoids benchmark
+# leakage while still giving the model a concrete demonstration of the
+# desired simplification style.
+
 _FEW_SHOT_EXAMPLES = (
-    "Example:\n"
-    "Original: The committee convened to deliberate on the proposal.\n"
-    "Simplified: The group met to talk about the plan.\n\n"
-    "Example:\n"
-    "Original: The drought severely impacted agricultural output.\n"
-    "Simplified: The long dry period greatly reduced how much food farms produced.\n"
+    "Example 1:\n"
+    "Original: Since 2000, the recipient of the Kate Greenaway Medal has also been presented with the Colin Mears Award to the value of £5000.\n"
+    "Simplified: Since 2000, the winner of the Kate Greenaway Medal also receives the Colin Mears Award. The value of the prize is £5000.\n\n"
+    "Example 2:\n"
+    "Original: Admission to Tsinghua is extremely competitive.\n"
+    "Simplified: Getting admitted to Tsinghua is difficult. There is a lot of competition.\n"
 )
 
 _FEW_SHOT_EXAMPLES_JSON = (
     "Example JSON object:\n"
-    '{"simplified": "The group met to talk about the plan."}\n'
-    "for original: The committee convened to deliberate on the proposal.\n\n"
+    '{"simplified": "Since 2000, the winner of the Kate Greenaway Medal also receives the Colin Mears Award. The value of the prize is £5000."}\n'
+    "for original: Since 2000, the recipient of the Kate Greenaway Medal has also been presented with the Colin Mears Award to the value of £5000.\n\n"
     "Example JSON object:\n"
-    '{"simplified": "The long dry period greatly reduced how much food farms produced."}\n'
-    "for original: The drought severely impacted agricultural output.\n"
+    '{"simplified": "Getting admitted to Tsinghua is difficult. There is a lot of competition."}\n'
+    "for original: Admission to Tsinghua is extremely competitive.\n"
 )
 
 
@@ -71,7 +80,8 @@ def build_simplification_messages(
     if strategy == "chain_of_thought":
         user = (
             f"Simplify the text for reading level: {target_level}.\n"
-            "First, silently identify hard words/phrases and simplify sentence structure. "
+            "First, silently identify hard words or phrases, simplify sentence structure, "
+            "and check that no important facts are lost. "
         )
         if json_object:
             user += 'Then respond with JSON only: {"simplified": "<final simplified passage>"}.\n\n'
@@ -107,10 +117,10 @@ def build_simplification_prompt(*, text: str, target_level: str, strategy: Promp
         return (
             f"{base}\n"
             f"Simplify the text for reading level: {target_level}.\n"
-            "First, silently identify hard words/phrases and simplify sentence structure. "
+            "First, silently identify hard words or phrases, simplify sentence structure, "
+            "and check that no important facts are lost. "
             "Then output ONLY the final simplified text.\n\n"
             f"TEXT:\n{text}"
         )
 
     raise ValueError(f"Unknown strategy: {strategy}")
-

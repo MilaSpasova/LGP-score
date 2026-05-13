@@ -16,6 +16,8 @@ def simplify_with_gemini(
     model: str = "google/gemini-2.5-pro-preview",
     api_key_env: str = "OPENROUTER_API_KEY",
     temperature: float | None = None,
+    top_p: float | None = None,
+    seed: int | None = None,
     timeout_s: float = 60.0,
     json_object: bool = True,
 ) -> str:
@@ -42,6 +44,8 @@ def simplify_with_gemini(
         model=model,
         messages=messages,
         temperature=temperature,
+        top_p=top_p,
+        seed=seed,
         timeout_s=timeout_s,
         response_format={"type": "json_object"} if json_object else None,
     )

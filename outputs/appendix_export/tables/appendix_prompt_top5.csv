@@ -1,0 +1,6 @@
+Strategy,Temperature,JSONSuccess,StabilityScore,SBERT,BenchmarkScore,OverallScore
+zero_shot,0.5,1.0,0.45,0.91,0.83,0.8
+few_shot,0.2,1.0,0.46,0.91,0.81,0.79
+chain_of_thought,0.2,1.0,0.43,0.93,0.81,0.79
+zero_shot,0.2,1.0,0.45,0.91,0.8,0.79
+zero_shot,0.0,1.0,0.43,0.92,0.8,0.79

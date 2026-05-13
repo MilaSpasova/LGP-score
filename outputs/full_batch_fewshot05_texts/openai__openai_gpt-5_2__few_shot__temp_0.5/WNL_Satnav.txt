@@ -1,0 +1,17 @@
+In the journal Nature, Roger McKinlay, a former president of the Royal Institute of Navigation, says we depend too much on GPS (global positioning system). He says this may weaken our natural sense of direction. He wrote that if we do not protect these skills, they will get worse as we use smart devices more.
+
+McKinlay says we will need to spend a lot of money before navigation systems are good enough for technologies like self-driving vehicles. Until then, he says we need better research on navigation systems. He also says children should learn to find their way using traditional methods. He wrote that schools should teach navigation and map reading as life skills.
+
+Ofcom (the Office of Communications) says about 66% of adults in the UK had a smartphone in 2015, up from 39% in 2012. This makes GPS easy to use. But McKinlay, a satellite communication and navigation consultant, says we should be careful about letting devices do all our navigation. He wrote that navigation is a “use-it-or-lose-it” skill.
+
+Only a few scientific studies have looked at this. But a study from 2009 supports the idea. Dr Hugo Spiers, a neuroscientist at University College London, compared London taxi drivers who still worked with taxi drivers who had retired about four years earlier. The retired drivers did worse on navigation tests than the drivers still working. Spiers said this showed their skills dropped when they were not using them.
+
+Spiers also says it can be dangerous to depend on GPS. He says the biggest risk is that people may be led into dangerous situations without realizing it. One death linked to satnavs (satellite navigation devices) was in 2010, when a driver drove into a reservoir in Spain. Spiers said there is real risk in relying on a satnav. But he also said the health risk of not using your brain well is not known.
+
+Spiers says how we use navigation technology may change its effect on our skills. Audio directions mean you do not have to think much about navigation. But using smartphone apps as digital maps is different. He said that in the past people used printed maps, like an A to Z map. Now people use computer-aided information and still have to think hard about where they are going and use the device. He said modern technology is not making us completely less intelligent.
+
+McKinlay still believes navigation technology is not ready for the future, like driverless cars and smart cities. He said GPS is still not good enough for very important safety uses, like landing aircraft or navigating aircraft.
+
+Spiers thinks artificial intelligence using machine learning could create new navigation tools. But McKinlay is doubtful. He said machines will become smarter but focused on specific tasks. He said a big breakthrough would be when machines can understand what you are thinking and what you want to do.
+
+McKinlay says humans must be able to take control of navigation. He asked if we really want people to panic and be unable to do anything when the technology stops working or the battery goes flat. He said technology is not magic; it is just a tool.

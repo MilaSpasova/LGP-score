@@ -1,0 +1,23 @@
+The inventor of a new computer system for autopsies says it could one day make it very hard to commit a “perfect murder.”
+
+The method is called “Virtopsy.” It is being used in some forensic medical institutes in Europe. Scientists at the University of Zurich first developed it. In a normal autopsy, doctors use a scalpel and make a Y-shaped cut in the chest. With Virtopsy, doctors can look at the body in 3-D on computer screens.
+
+Michael Thali, Director of Zurich’s Institute for Forensic Medicine, helped invent Virtopsy. He said it could change criminal investigations. He said a virtual autopsy could help find every piece of evidence.
+
+Virtopsy uses images from magnetic resonance imaging (MRI), computed tomography (CT), and surface scans of dead bodies. Together, these tools are called a “Virtobot.” The method can find injuries like lesions and blows that are sometimes missed in a normal autopsy. It can also show air pockets, heart attacks, and even cancer.
+
+Richard Dirndorfer, a pioneer of DNA analysis in criminology and a developer of Virtopsy, said Virtopsy might replace autopsies one day. He said it may happen slowly, like how DNA analysis slowly replaced blood group analysis.
+
+These computer images let doctors see deep inside the body. The method has already found bleeding and broken bones that regular autopsies did not find. Right now, the main goal is to use Virtopsy together with the traditional autopsy.
+
+Dominic Wichmann, a doctor at Hamburg’s University Hospital, said it could help forensic scientists plan autopsies more efficiently. Criminologists from many countries have traveled to Switzerland in the past few years to see the new method.
+
+The US TV drama CSI has shown Virtopsy twice. In one story, it proved that a murder victim was killed by a bullet through the cheek. In another, a Virtopsy meant a murdered man’s wish to be cryogenically frozen could still happen because his body was not cut.
+
+Scientists have worked on this method for decades. At first they worked in an unheated lab and many people laughed at the idea. Later, a rich ophthalmologist donated money, and the project grew. Even then, some people rejected it because they thought it could harm the traditional skills of forensic scientists and pathologists. But younger scientists often see it as helpful. They think it can support normal methods and maybe replace some of them, though probably not completely.
+
+Lars Oesterhelweg, Deputy Director of the Institute of Forensic Medicine at the Charité Hospital in Berlin, said doctors still need the usual cuts to study things like the color of the blood, the thickness of body fluids, and smells.
+
+He also said Virtopsy is very useful when the cause of death is unclear. It can help get third opinions, look at investigations again, and reopen cases.
+
+Scientists also said families are often more willing to accept Virtopsy, because it does not cut or disfigure the body like a traditional autopsy can.

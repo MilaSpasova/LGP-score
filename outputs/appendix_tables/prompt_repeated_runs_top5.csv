@@ -1,0 +1,6 @@
+final_rank,strategy,temperature,mean_overall_score,std_overall_score,mean_json_success_rate,mean_semantic_similarity_sbert,mean_human_benchmark_score
+1,few_shot,0.5,0.763,0.042,0.944,0.872,0.819
+2,chain_of_thought,0.5,0.761,0.039,0.944,0.882,0.815
+3,chain_of_thought,0.2,0.759,0.043,0.944,0.879,0.807
+4,chain_of_thought,0.0,0.752,0.044,0.944,0.883,0.78
+5,zero_shot,0.0,0.75,0.073,0.917,0.847,0.794

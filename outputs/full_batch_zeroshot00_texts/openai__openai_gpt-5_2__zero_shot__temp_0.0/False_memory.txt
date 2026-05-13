@@ -1,0 +1,25 @@
+Scientists put a false memory into the brains of mice. They did this to help understand why people sometimes “remember” things that never happened.
+
+False memories can cause big problems in court. Sometimes people are found guilty because a witness says they saw it. Later, DNA or other strong evidence can show the witness was wrong.
+
+Susumu Tonagawa, a scientist at the Massachusetts Institute of Technology (MIT), and his team studied how memories form. A memory has parts, like what you saw, where you were, and when it happened. The brain stores these parts in changes in brain cells and their connections. Tonagawa says real memories and false memories seem to use the same brain systems.
+
+The team used a method called optogenetics. This lets scientists control certain brain cells. They changed brain cells in the mouse hippocampus, a brain area used for making memories. They made these cells produce a protein called channelrhodopsin. When blue light shines on cells with channelrhodopsin, the cells turn on. They also set it up so the protein would be made in the cells the mouse was using to store a memory.
+
+First, the team put mice in a chamber and let them explore it. While the mice explored, the memory-making brain cells made channelrhodopsin. The next day, the mice were put in a different chamber and got a small electric shock, so they learned fear. At the same time, the scientists shone light into the mice’s brains to turn on the memory of the first chamber. This made the mice link the fear to the first chamber.
+
+At the end, the mice were put back in the first chamber. The mice froze in fear, even though they had never been shocked there. Tonagawa said this was like putting a false memory into the mouse brain.
+
+Tonagawa said something like this may happen in humans too. He said humans have many thoughts inside their brains, even when nothing outside is happening. People might connect a thought in their mind with a bad or good event, even if the event did not really happen that way.
+
+He also said real and false memories are made in very similar ways in the brain. Because of this, it can be hard for a person to tell if a memory is real or false. He hopes this work will warn lawmakers and legal experts that memory can be unreliable.
+
+Chris French at Goldsmiths, University of London, studies false memories in people. He said the results are an important first step to understanding what happens in the brain. He said memory does not work like a video camera. Instead, the brain rebuilds memories from pieces of the real event and sometimes from other information.
+
+French warned that the false memories made in mice were much simpler than some false memories in people. He gave examples like false memories of childhood sexual abuse, bizarre satanic ritual abuse, abduction by aliens, or “past lives.” He said these rich false memories would involve many brain systems, and scientists still do not understand how they form at the level of neurons.
+
+Mark Stokes at Oxford University said the experiments were very impressive, but people should not take them too far. He said it was more like adding a fear link to a place, so someone feels uneasy there without knowing why. He said this probably would not create the many details found in normal memories. But over time, the fear link might join with other memories and create a more detailed false story.
+
+The mouse work will help scientists ask harder questions about human memory. Steve Ramirez at MIT said that now scientists can reactivate and change memories in the brain, they can test questions that used to be only philosophy. He asked if there are different ways false memories can form, if they can be made on purpose, and if false memories could be made about objects, food, or other mice.
+
+French said scientists must think carefully about how this technology is used. He said there are serious ethical issues, and the risk of misuse is very great.

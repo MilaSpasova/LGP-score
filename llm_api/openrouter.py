@@ -64,8 +64,11 @@ def chat_completion_text(
     model: str,
     messages: list[dict[str, str]],
     temperature: float | None = None,
+    top_p: float | None = None,
+    seed: int | None = None,
     timeout_s: float = 60.0,
     response_format: dict[str, str] | None = None,
+    max_tokens: int | None = 1200,
 ) -> str:
     """Run a chat completion on OpenRouter and return non-empty assistant text."""
     client = openrouter_client(api_key=api_key, timeout_s=timeout_s)
@@ -75,8 +78,17 @@ def chat_completion_text(
     }
     if temperature is not None:
         create_kwargs["temperature"] = temperature
+    if top_p is not None:
+        create_kwargs["top_p"] = top_p
+    if seed is not None:
+        create_kwargs["seed"] = seed
     if response_format is not None:
         create_kwargs["response_format"] = response_format
+    # OpenRouter may otherwise allocate an unnecessarily large default
+    # completion budget, which can trigger 402 credit-limit errors even for
+    # short simplification tasks.
+    if max_tokens is not None:
+        create_kwargs["max_tokens"] = max_tokens
     resp = client.chat.completions.create(**create_kwargs)
 
     content: Optional[str] = None

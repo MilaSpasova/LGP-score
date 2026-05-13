@@ -1,0 +1,3 @@
+display_label,delta_aoa,delta_concreteness,delta_imageability,delta_cli,delta_tier2_proxy_token_ratio,delta_fk_grade,delta_mtld,semantic_similarity_sbert
+Human Elementary vs Advanced,-18.51,-0.01,0.26,0.3,-0.03,-2.98,-26.36,0.89
+LLM Few-shot 0.5,-19.27,-0.15,0.39,0.32,-0.03,-3.98,-15.46,0.9

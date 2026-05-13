@@ -1,0 +1,29 @@
+When you hear the word Amazon, what do you think of first: the huge rainforest, the long river, or the big online store? Which one do you think is most important?
+
+This question is part of an important argument about internet addresses. Brazil and Peru do not want the US company Amazon to get the internet ending “.amazon”.
+
+The company in Seattle wants to use “.amazon” as a top-level domain name, like “.com”. But Brazil and Peru say this could stop people from using “.amazon” for things like protecting the environment, supporting indigenous rights, and other public uses.
+
+This is one of many fights about new internet endings, including “.patagonia” and “.shangrila”. It is about who controls the internet and what it is for.
+
+Before, internet endings were easy to understand. For example, “.com” was for businesses and “.gov” was for governments. There were about 20 other types too.
+
+Now these endings, called generic top-level domains (gTLDs), will grow a lot more than ever before.
+
+A non-profit group in the US called the Internet Corporation for Assigned Names and Numbers (ICANN) helps manage these internet names. ICANN has received requests for hundreds of new gTLDs, adding to the 22 that already exist. Each request is reported to cost almost $200,000.
+
+Amazon has asked for many new endings, such as “.shop”, “.song”, “.book”, and “.kindle”. But the most argued-about request is “.amazon”.
+
+Brazil and Peru want the “.amazon” request to be taken back. They say a private company should not get a name that is also a very important place name. The Amazon area crosses their countries, and the name is used for some regions and groups that work across borders.
+
+Brazil’s Ministry of Science and Technology said it does not help the public when private companies use place names as gTLDs to support their brand or make money.
+
+Brazil said other members of the Amazon Cooperation Treaty agree with them: Bolivia, Colombia, Ecuador, Guyana, Suriname, and Venezuela.
+
+There have also been many other protests about new internet endings that use place names, cultural names, or names that people argue about.
+
+Argentina is unhappy that a US outdoor clothing company, Patagonia, wants “.patagonia”. Argentina says Patagonia is a well-known region with its own parliament. Argentina says the region is important to its economy because it has oil, fishing, mining, and agriculture. It also has an active local community and many tourists.
+
+China has also argued about “.shangrila”, which a hotel group called Shangri-La wants. Officials in Beijing say “shangri-la” is the name of a region in Yunnan province. But the region was only renamed in 2001, long after the hotel group started. The name was used so the local community could make money from the famous made-up paradise in the novel Lost Horizon by British writer James Hilton.
+
+At a conference in Beijing in April, ICANN’s Governmental Advisory Committee, which represents national governments, suggested stopping disputed requests for now. They are expected to talk about them again at a meeting in Durban in July. The first approved new domain names should be used before the end of 2013.

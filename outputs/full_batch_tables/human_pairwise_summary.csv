@@ -1,0 +1,2 @@
+comparison_type,delta_aoa,delta_concreteness,delta_imageability,delta_cli,delta_tier2_proxy_token_ratio,delta_fk_grade,delta_mtld,semantic_similarity_sbert
+human_reference,-18.51,-0.01,0.26,0.3,-0.03,-2.98,-26.36,0.89

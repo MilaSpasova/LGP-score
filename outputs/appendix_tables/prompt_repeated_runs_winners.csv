@@ -1,0 +1,4 @@
+Run,Strategy,Temperature,OverallScore,JSONSuccess
+run2,zero_shot,0.2,0.798,1.0
+run3,chain_of_thought,0.5,0.716,0.833
+run4,few_shot,0.0,0.791,1.0

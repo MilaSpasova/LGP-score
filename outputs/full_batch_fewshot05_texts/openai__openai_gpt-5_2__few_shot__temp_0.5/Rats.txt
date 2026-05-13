@@ -1,0 +1,21 @@
+Scientists have linked the brains of two animals so they can share simple sensory information. The researchers say this is a big step toward what they call the world’s first “organic computer”.
+
+A team in the US put special devices, called brain-to-brain interfaces, on two rats. These devices let the rats work together on easy tasks to get a reward, like a drink of water. In one test, the scientists used the internet to connect two rats that were thousands of miles apart. One rat was at Duke University in Durham, North Carolina. The other rat was in Natal, Brazil.
+
+The work was led by Miguel Nicolelis. He is known for devices that help paralyzed people control computers and robotic arms with their thoughts. The team says this new work may allow many brains to be connected so they can share information. Nicolelis said they made a direct communication link between brains, and he called it an “organic computer”.
+
+To do this, the scientists used tiny grids of electrodes to connect the rats’ brains. The electrodes reached into the motor cortex, the part of the brain that controls movement.
+
+The rats learned to press a lever when a light above it turned on. If they did it right, they got water. Then the scientists put the rats in two separate compartments. Only one rat could see the light. When that rat pressed the lever, an electronic copy of its brain activity was sent to the other rat’s brain. In the tests, the second rat pressed the lever correctly 70% of the time.
+
+The connection worked in both directions. If the second rat failed, the first rat did not get water. The first rat seemed to change its behavior to help the second rat do better. The rats also worked together on a task where they had to tell the difference between narrow and wide openings using their whiskers.
+
+In the final test, the scientists sent brain activity back and forth over the internet between rats on different continents. Miguel Pais-Vieira, the first author of the study, said the animals could still communicate even with noisy signals and delays. He said this suggests it could be possible to make a working network of animal brains in many different places.
+
+Nicolelis said the team is now trying to link several animals’ brains at the same time to solve harder tasks. He said they cannot predict what new effects might appear when animals interact in a “brain-net”. He said that, in theory, a group of brains might solve problems that one brain cannot solve alone. The research is published in the journal Scientific Reports.
+
+Anders Sandberg, from the Future of Humanity Institute at Oxford University, said the work is very important for understanding how brains store information. He said the possible effects and future uses could be much wider. He said humans do so well because we communicate and work together very well.
+
+Sandberg also said he does not think this will create super-smart rats. He said sharing sensory information is not the same as being able to plan. He said he is not worried about an invasion of “rat multiborgs”.
+
+Very little is known about how thoughts are stored in the brain and how they could be sent into another person’s brain, so that is not realistic soon. Sandberg said that many thoughts are like a “draft” of what we might do. People often would not want to share these drafts because it could be embarrassing or confusing. He said many drafts change before we act, and most of the time we should be glad we are not inside someone else’s head.

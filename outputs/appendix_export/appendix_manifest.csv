@@ -1,0 +1,8 @@
+type,name
+table,appendix_human_level_summary.csv
+table,appendix_human_pairwise_summary.csv
+table,appendix_prompt_top5.csv
+figure,human_benchmark_profile.png
+figure,prompt_score_heatmap.png
+figure,top5_prompt_conditions.png
+figure,prompt_component_breakdown.png

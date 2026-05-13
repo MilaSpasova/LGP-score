@@ -1,0 +1,4 @@
+display_label,aoa,concreteness,imageability,cli,tier2_proxy_token_ratio,fk_grade,mtld,lexical_coverage
+Human Advanced,359.45,355.63,383.01,-0.17,0.1,11.13,110.29,0.51
+Human Elementary,340.94,355.62,383.27,0.13,0.07,8.16,83.93,0.56
+LLM Zero-shot 0.0,338.2,355.27,383.24,0.17,0.07,7.16,96.81,0.57

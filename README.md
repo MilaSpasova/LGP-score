@@ -1,249 +1,257 @@
 # Benchmarking Linguistic Growth Potential (LGP)
 
-> **A Comparative Analysis of LLM-Simplified vs. Human-Simplified Texts**
+This repository contains the computational pipeline for the thesis comparison between human simplification and LLM simplification on the OneStopEnglish corpus.
 
-This repository contains the computational framework, datasets, and analysis pipeline for evaluating whether Large Language Models (LLMs) preserve the "growth gap" necessary for effective language acquisition in children.
+The current implementation is fully local for evaluation. An earlier version of the workflow planned to use CTAP as an external feature-extraction service, but the final repository no longer depends on that platform.
 
-## 📌 Project Overview
-Traditional text simplification often focuses solely on readability, potentially removing the "challenge" required for learning. This project implements **Krashen’s Input Hypothesis ($i+1$)** by defining and measuring **Linguistic Growth Potential (LGP)**—the balance between decodable text and the introduction of new lexical/syntactic structures.
+## Structure
 
-## 🛠 Tech Stack & Methodology
-- **Language:** Python 3.x
-- **Models:** OpenRouter (OpenAI + Google Gemini model IDs, e.g. `openai/gpt-5.2`, `google/gemini-2.5-pro-preview`)
-- **Corpora:** Newsela, OneStopEnglish
-- **Psycholinguistic Databases:** MRC Psycholinguistic Database (AoA and related norms in MRC where available)
-
-### Key Features
-* **LGP Scoring Pipeline:** A custom Python engine that tokenizes text and cross-references tokens with psycholinguistic variables:
-    * **Age of Acquisition (AoA):** Targeting the "growth window" (1–2 years above current age).
-    * **Concreteness & Imageability:** Ensuring new vocabulary remains bridgeable to existing knowledge.
-    * **Tier 2 Vocabulary:** Automated identification of high-utility academic words.
-* **Prompt Engineering Suite:** Evaluation of **Zero-shot**, **Few-shot**, and **Chain-of-Thought (CoT)** strategies, including **Prompt Sketching** for targeted linguistic constraints.
-* **Interactive Analysis Dashboard:** A visual tool for educators to input text and receive:
-    * Side-by-side AI vs. Human comparison.
-    * Visual "Tier" and "LGP" mapping.
-    * Instructional "frustration" alerts (for $i+3$ levels).
-
-## Evaluation Logic
-The LGP score will be calculated by weighting words within the $i+1$ window. The goal is to maximize pedagogical value while avoiding the "frustration level" ($i+3$, or 4+ years above the target age).
-
----
-
-## How everything works
-
-### Repository layout
-
-```
+```text
 LGP-score/
-├── README.md                 # This file
-├── requirements.txt          # Python dependencies
-├── .env.example              # Template for API keys (copy to .env)
-├── .gitignore
-│
-├── setup_mrc_database.py     # Loads and cleans the MRC psycholinguistic database
-├── setup_onestop_english.py  # OneStopEnglish: official aligned corpus on disk only
-├── onestop_english_exploration.ipynb  # EDA: official aligned corpus (local clone required)
-├── mrc_exploration.ipynb
-├── run_onestop_english.py    # CLI: batch / experiments / smoke (OpenRouter OpenAI + Gemini)
-│
-└── llm_api/                  # LLM integration for text simplification
-    ├── __init__.py
-    ├── prompts.py            # Zero-shot, Few-shot, Chain-of-Thought templates
-    ├── openrouter.py         # OpenAI SDK → OpenRouter Chat Completions
-    ├── openai_client.py      # ChatGPT-class models via OpenRouter (`openai/...`)
-    └── gemini_client.py      # Gemini via OpenRouter (`google/...`)
+|-- dashboard/
+|-- run_onestop_english.py
+|-- analyze_thesis_metrics.py
+|-- rank_prompt_configs.py
+|-- summarize_thesis_results.py
+|-- append_fk_mtld_metrics.py
+|-- setup_mrc_database.py
+|-- setup_onestop_english.py
+|-- methodology_analysis.py        # legacy wrapper
+|-- rank_prompt_experiments.py     # legacy wrapper
+|-- summarize_results.py           # legacy wrapper
+|-- FKandMTLD.py                   # legacy wrapper
+|-- setup_onestopenglish.py        # legacy wrapper
+|-- lgp_pipeline/
+|-- llm_api/
+|-- notebooks/
+|-- data/
+`-- outputs/
 ```
 
-### 1. MRC psycholinguistic database (`setup_mrc_database.py`)
+Use the repo as four layers:
+- `run_onestop_english.py`: generation entrypoint for OpenRouter experiments
+- `analyze_thesis_metrics.py`, `rank_prompt_configs.py`, `summarize_thesis_results.py`: analysis and reporting entrypoints
+- `lgp_pipeline/`: reusable local metric logic
+- `llm_api/`: provider clients and prompt templates
+- `dashboard/`: teacher-facing web UI for benchmark review, vocabulary inspection, live simplification, and questionnaire capture
 
-The **MRC database** provides psycholinguistic variables for English words (e.g. Age of Acquisition, Concreteness, Imageability, Familiarity). The script:
+The similarly named older files are only compatibility wrappers so earlier commands still run:
+- `methodology_analysis.py`
+- `rank_prompt_experiments.py`
+- `summarize_results.py`
+- `FKandMTLD.py`
+- `setup_onestopenglish.py`
 
-- Loads the dataset from Hugging Face: `StephanAkkerman/MRC-psycholinguistic-database` (train split).
-- Normalises column names and renames key ones using a fixed mapping, e.g.:
-  - `age of acquisition` → `aoa`
-  - `concreteness` → `conc`
-  - `imageability` → `img`
-  - `familiarity` → `fam`
-  - `kf written frequency` → `kf_freq`
-- Cleans the `word` column (removes `&`, strips whitespace).
-- Converts psycholinguistic columns to numeric, treating `0` as missing.
-- Drops rows where **all** of `fam`, `conc`, and `img` are missing (so every retained word has at least one rating).
+## File Audit
 
-Under the hood the main entrypoint is:
+Useful and active:
+- `run_onestop_english.py`: main experiment runner
+- `analyze_thesis_metrics.py`: core local analysis pipeline for Advanced, Elementary, and LLM texts
+- `rank_prompt_configs.py`: ranks prompt and temperature conditions
+- `summarize_thesis_results.py`: builds thesis-ready summary tables
+- `append_fk_mtld_metrics.py`: auxiliary script for adding FK and MTLD to legacy exported result files
+- `setup_mrc_database.py`: validates and previews the MRC resource
+- `setup_onestop_english.py`: canonical OneStopEnglish loader
+- `lgp_pipeline/`: preprocessing, psycholinguistics, Tier 2 proxy, text metrics, and SBERT
+- `llm_api/`: OpenRouter client layer and prompt templates
+- `notebooks/`: exploratory analysis only, not required for the pipeline
 
-```python
-from setup_mrc_database import setup_mrc_database
+Useful but legacy:
+- `methodology_analysis.py`
+- `rank_prompt_experiments.py`
+- `summarize_results.py`
+- `FKandMTLD.py`
+- `setup_onestopenglish.py`
 
-mrc_df = setup_mrc_database()
+Not part of the project code:
+- `venv/`
+- `__pycache__/`
+
+## Core Inputs
+
+### OneStopEnglish corpus
+
+The code expects the official corpus under `data/OneStopEnglishCorpus`, or a path passed with `--aligned-corpus`, or `OSE_CORPUS_ROOT`.
+
+### LLM simplification CSV
+
+Optional input for the comparison stage. This is produced by `run_onestop_english.py` and then passed into `analyze_thesis_metrics.py`.
+
+## Main Outputs
+
+The main analysis script writes:
+- [outputs/methodology_text_metrics.csv](D:/Year-3-Uni/thesis/Code/LGP-score/outputs/methodology_text_metrics.csv:1)
+- [outputs/methodology_pairwise_comparisons.csv](D:/Year-3-Uni/thesis/Code/LGP-score/outputs/methodology_pairwise_comparisons.csv:1)
+
+`methodology_text_metrics.csv` contains one row per text variant with:
+- source metadata
+- local psycholinguistic metrics for human and LLM texts
+- `FK`
+- `MTLD`
+- z-scores
+- `CLI`
+- `tier2_proxy_token_ratio`
+
+`methodology_pairwise_comparisons.csv` contains one row per simplified-vs-original comparison with:
+- `delta_cli`
+- `delta_aoa`
+- `delta_concreteness`
+- `delta_imageability`
+- `delta_fk_grade`
+- `delta_mtld`
+- `delta_tier2_proxy_token_ratio`
+- `semantic_similarity_sbert`
+
+## Reproducible Command Set
+
+### Launch the teacher dashboard
+
+```powershell
+venv\Scripts\streamlit run dashboard/streamlit_app.py
 ```
 
-**CLI usage:** Run `python setup_mrc_database.py` to test the load and see a small preview of words with complete `fam`/`conc`/`img` ratings. The returned DataFrame is intended for use in the LGP pipeline (e.g. mapping tokens to AoA/conc/img for scoring).
+The dashboard provides:
+- benchmark review with `Human Advanced`, `Human Elementary`, `Few-shot 0.5`, and `Zero-shot 0.0`
+- vocabulary review with retained / removed / added AVL terms
+- an optional live simplification page
+- an in-app teacher questionnaire
+- local CSV / JSON feedback capture in `outputs/dashboard_feedback`
 
-### 2. OneStopEnglish corpus (`setup_onestop_english.py`)
+See [dashboard/README.md](D:/Year-3-Uni/thesis/Code/LGP-score/dashboard/README.md:1) for the expected input files.
 
-**OneStopEnglish** is used here only from the **official** [OneStopEnglishCorpus](https://github.com/nishkalavallabhi/OneStopEnglishCorpus): folder **`Texts-Together-OneCSVperFile`** (or the repo root), **189 articles × 3 aligned levels**. There is **no** Hugging Face fallback in this repo.
+### Validate setup
 
-**Loader:** `load_onestop_english_aligned(corpus_dir)` — returns a DataFrame with columns `text`, `level`, `level_id` (0/1/2), `split` (always `aligned`), and `story_id` (one per article). The CSV column **Advanced** is stored as level **Advance**.
-
-**Resolving the corpus directory** (same rules for `python setup_onestop_english.py` and `run_onestop_english.py batch`):
-
-1. Explicit path: first CLI argument to `setup_onestop_english.py`, or `--aligned-corpus DIR` for `batch`.
-2. Else environment variable **`OSE_CORPUS_ROOT`** (must be an existing directory).
-3. Else **`./data/OneStopEnglishCorpus`** under the current working directory, if that folder exists.
-
-If nothing resolves, the CLI prints an error with clone instructions.
-
-**Clone the corpus** (not in git):
-
-```bash
-git clone https://github.com/nishkalavallabhi/OneStopEnglishCorpus.git data/OneStopEnglishCorpus
-```
-
-**Exploration notebook:** [`onestop_english_exploration.ipynb`](onestop_english_exploration.ipynb) sets `OSE_CORPUS_ROOT` to `data/OneStopEnglishCorpus` by default. Open Jupyter with the project folder as the working directory, or change that variable in the notebook to your clone path.
-
-**CLI preview:** From the project root with the clone in place:
-
-```bash
+```powershell
+python setup_mrc_database.py
 python setup_onestop_english.py
+python run_onestop_english.py smoke
 ```
 
-Or: `python setup_onestop_english.py /path/to/OneStopEnglishCorpus`
+### OpenRouter setup
 
-**In code:** `from setup_onestop_english import load_onestop_english_aligned, resolve_onestop_corpus_dir`.
+Create a local `.env` file in the repo root with:
 
-### 3. LLM API clients (`llm_api/`)
-
-Both simplification tracks use **[OpenRouter](https://openrouter.ai/)**’s OpenAI-compatible Chat Completions API, so one key can route to OpenAI-hosted and Google-hosted models.
-
-| File | Purpose |
-|------|--------|
-| `prompts.py` | Builds chat messages for a given **strategy** (see below). Used by both clients. |
-| `openrouter.py` | Base URL `https://openrouter.ai/api/v1`, optional `OPENROUTER_HTTP_REFERER` / `OPENROUTER_APP_TITLE`. |
-| `openai_client.py` | Default model `openai/gpt-5.2` (override with any OpenRouter `openai/...` id). Needs `OPENROUTER_API_KEY`. |
-| `gemini_client.py` | Default model `google/gemini-2.5-pro-preview` (override with any OpenRouter `google/...` id). Same key. |
-
-**Prompt strategies** (thesis-relevant):
-
-- **`zero_shot`** — Ask the model to simplify for a given reading level with no examples.
-- **`few_shot`** — Include one or two example (original → simplified) pairs before the target text.
-- **`chain_of_thought`** — Ask the model to (silently) identify hard words/phrases and simplify structure, then output only the final simplified text.
-
-**Example (single call):**
-
-```python
-from llm_api.openai_client import simplify_with_openai
-from llm_api.gemini_client import simplify_with_gemini
-
-text = "The committee convened to deliberate on the proposal."
-level = "Elementary"
-
-# OpenAI track on OpenRouter
-simple_openai = simplify_with_openai(text=text, target_level=level, strategy="zero_shot")
-
-# Gemini track on OpenRouter
-simple_gemini = simplify_with_gemini(text=text, target_level=level, strategy="zero_shot")
+```powershell
+OPENROUTER_API_KEY=sk-or-v1-your-real-key-here
 ```
 
-### 4. OneStopEnglish CLI (`run_onestop_english.py`)
+Optional:
 
-Subcommands:
+```powershell
+OPENROUTER_HTTP_REFERER=https://your-project-url.example
+OPENROUTER_APP_TITLE=LGP-score
+```
 
-| Subcommand | Purpose |
-|------------|--------|
-| `batch` | Run the corpus through one or both LLMs; one row per (source text × provider) in a CSV. |
-| `experiments` | Grid over strategies and temperatures for **aligned Advanced** texts only (requires `--aligned-corpus`). Default CSV: `outputs/onestop_english_advanced_experiments.csv`. |
-| `smoke` | Quick OpenRouter check: one short call on each track (replaces a separate test script). |
+### Run prompt and temperature experiment
 
-**`batch` — what it does**
+```powershell
+python run_onestop_english.py experiments `
+  --aligned-corpus data/OneStopEnglishCorpus `
+  --source-levels Advanced `
+  --target-level Elementary `
+  --strategies zero_shot,few_shot,chain_of_thought `
+  --temperatures 0.0,0.2,0.5,0.8 `
+  --output outputs/onestop_english_advanced_experiments.csv
+```
 
-1. Resolves the corpus directory (`--aligned-corpus`, then `OSE_CORPUS_ROOT`, then `./data/OneStopEnglishCorpus`).
-2. Loads aligned rows via `load_onestop_english_aligned`.
-3. Optionally limits rows (`--limit`).
-4. For each text, calls the OpenAI and/or Gemini **OpenRouter** tracks (with retries).
-5. Writes to a CSV (default: `outputs/onestop_english_simplifications.csv`).
+### Run the 12-text pilot
 
-**`batch` options:**
+```powershell
+python run_onestop_english.py experiments `
+  --aligned-corpus data/OneStopEnglishCorpus `
+  --provider openai `
+  --source-levels Advanced `
+  --target-level Elementary `
+  --strategies zero_shot,few_shot,chain_of_thought `
+  --temperatures 0.0,0.2,0.5 `
+  --limit 12 `
+  --sample-seed 42 `
+  --export-text-dir outputs/pilot_text_exports `
+  --output outputs/pilot_12text_experiments.csv
+```
 
-| Option | Meaning |
-|--------|--------|
-| `--provider` | `openai`, `gemini`, or `both` |
-| `--strategy` | `zero_shot`, `few_shot`, or `chain_of_thought` |
-| `--limit N` | Process only the first N texts (0 = all rows, 189 × 3 = 567) |
-| `--openai-model` | OpenRouter id, e.g. `openai/gpt-5.2` |
-| `--gemini-model` | OpenRouter id, e.g. `google/gemini-2.5-pro-preview` |
-| `--output` | Output CSV path |
-| `--temperature` | Optional sampling temperature |
-| `--max-retries` | Retries per API call on failure |
-| `--base-sleep-s` | Base delay for exponential backoff |
-| `--aligned-corpus DIR` | Override corpus root; otherwise env / default path (see §2) |
+### Rank pilot conditions
 
-Run `python run_onestop_english.py experiments -h` for the full experiment grid flags (`--strategies`, `--temperatures`, etc.).
+First pass:
 
----
+```powershell
+python rank_prompt_configs.py `
+  --experiments outputs/pilot_12text_experiments.csv `
+  --output-dir outputs/pilot_ranking
+```
 
-## Getting started
+Deeper ranking with local metrics:
 
-1. **Clone the repository** (if you have not already):
-   ```bash
-   git clone <repo-url>
-   cd LGP-score
-   ```
+```powershell
+python rank_prompt_configs.py `
+  --experiments outputs/pilot_12text_experiments.csv `
+  --text-metrics outputs/pilot_methodology_text_metrics.csv `
+  --pairwise outputs/pilot_methodology_pairwise_comparisons.csv `
+  --output-dir outputs/pilot_ranking_local
+```
 
-2. **Create a virtual environment** (recommended):
-   ```bash
-   python -m venv venv
-   venv\Scripts\activate   # Windows
-   # source venv/bin/activate   # macOS/Linux
-   ```
+### Generate LLM simplifications for thesis comparison
 
-3. **Install dependencies:**
-   ```bash
-   python -m pip install -r requirements.txt
-   ```
+```powershell
+python run_onestop_english.py batch `
+  --aligned-corpus data/OneStopEnglishCorpus `
+  --provider both `
+  --source-levels Advanced `
+  --target-level Elementary `
+  --strategy zero_shot `
+  --temperature 0.5 `
+  --top-p 0.9 `
+  --seed 42 `
+  --limit 0 `
+  --export-text-dir outputs/simplification_text_exports `
+  --output outputs/onestop_english_simplifications.csv
+```
 
-4. **Configure API keys:** Copy `.env.example` to `.env` and set your [OpenRouter](https://openrouter.ai/) key:
-   ```
-   OPENROUTER_API_KEY=sk-or-v1-...
-   ```
-   Optionally set `OPENROUTER_HTTP_REFERER` and `OPENROUTER_APP_TITLE` for OpenRouter rankings.
+### Run thesis analysis
 
-5. **Quick checks:**
-   - MRC (needs internet for Hugging Face):
-     ```bash
-     python setup_mrc_database.py
-     ```
-   - OneStopEnglish (needs local clone under `data/OneStopEnglishCorpus`, or set `OSE_CORPUS_ROOT` / pass a path):
-     ```bash
-     python setup_onestop_english.py
-     ```
+```powershell
+python analyze_thesis_metrics.py `
+  --aligned-corpus data/OneStopEnglishCorpus `
+  --simplifications-csv outputs/onestop_english_simplifications.csv
+```
 
-   Optional OpenRouter check (needs `OPENROUTER_API_KEY` in `.env`):
-   ```bash
-   python run_onestop_english.py smoke
-   ```
+### Run human-only benchmark
 
-6. **OneStop English exploration notebook:** Clone the official corpus (see §2), then run [`onestop_english_exploration.ipynb`](onestop_english_exploration.ipynb) with the project as the working directory.
+```powershell
+python analyze_thesis_metrics.py `
+  --aligned-corpus data/OneStopEnglishCorpus
+```
 
-7. **Run a small batch** (e.g. 5 rows, both providers; corpus path resolved like §2):
-   ```bash
-   python run_onestop_english.py batch --provider both --strategy zero_shot --limit 5
-   ```
-   Output is written to `outputs/onestop_english_simplifications.csv`.
+### Build thesis summary tables
 
-8. **Run full batch** (all aligned rows, both LLMs):
-   ```bash
-   python run_onestop_english.py batch --provider both --limit 0
-   ```
-   This will take a while and use API credits; use `--limit` for testing first.
+```powershell
+python summarize_thesis_results.py `
+  --text-metrics outputs/methodology_text_metrics.csv `
+  --pairwise outputs/methodology_pairwise_comparisons.csv `
+  --output-dir outputs/summaries
+```
 
----
+## Methodology Mapping
 
-## Data flow (high level)
+Primary thesis metrics:
+- `AoA`
+- `Concreteness`
+- `Imageability`
+- `Tier 2 proxy` from the AVL core list
 
-1. **Human benchmark:** OneStopEnglish gives you texts already simplified by humans at three levels.
-2. **AI simplifications:** The same (or similar) source content can be sent through OpenRouter to ChatGPT-class and Gemini models with a target level and strategy; `run_onestop_english.py batch` (or `experiments`) does this at scale.
-3. **LGP pipeline (planned):** Tokenise both human- and AI-simplified texts, map words to the MRC database (AoA, concreteness, imageability), then compute LGP scores to compare how much “growth potential” (i+1) each version retains.
+Supporting metrics:
+- `Flesch-Kincaid`
+- `MTLD`
+- `SBERT`
 
-The current code covers loading MRC, loading OneStopEnglish, calling both LLMs with configurable strategies, and saving batch results; the actual LGP scoring and dashboard are to be added on top of this.
+The local pipeline is reproducible if you keep fixed:
+- corpus version
+- OpenRouter model IDs
+- prompt strategy
+- `temperature`
+- `top_p`
+- `seed`
 
----
+Remaining reproducibility risks:
+- OpenRouter models may still change behind the same model ID over time
+- the qualitative dashboard evaluation has not yet been completed, even though the dashboard and questionnaire are implemented

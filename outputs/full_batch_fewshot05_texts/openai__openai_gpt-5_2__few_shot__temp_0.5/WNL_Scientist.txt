@@ -1,0 +1,29 @@
+A subway system is like the blood system of a city. It is full of tiny living things, especially bacteria. These bacteria can come from foods like Swiss cheese and kimchi, from human skin, and sometimes from germs that can cause disease. For the first time, scientists have started to list and map the bacteria in a city’s subway, and they found many interesting things.
+
+Dr Christopher Mason, a geneticist at Weill Cornell Medical College, led a team. For 18 months, they used swabs to collect samples from the New York City subway. They took samples from turnstiles, seats, ticket booths, and stations. Mason called it “the first city-scale genetic profile ever.” They found meningitis at Times Square, a very small trace of anthrax on a handhold in a train carriage, and bacteria that can cause bubonic plague on a rubbish bin and a ticket machine at stations in uptown Manhattan.
+
+The research was published in the journal Cell Systems. The team said people should not panic about plague or anthrax. They said the anthrax trace was extremely small, rats likely carried the plague bacteria, and no one has become ill with plague in or around New York for years.
+
+The study says the results do not mean plague or anthrax is common. It also says New York residents are not at risk.
+
+Most of the bacteria the team found are harmless to humans, or even helpful. Many microorganisms help break down toxic hazards and waste, like the bacteria inside humans that help with digestion and other body functions.
+
+Mason said some results were expected. They found some bacteria linked to fecal matter, which he said should remind people to wash their hands. They also found many bacteria from the same group as helpful bacteria, including the kind used to make cheese.
+
+Some bacteria seemed to match food habits in different neighbourhoods. Across the subway, they found bacteria linked to cheeses like brie, cheddar, parmesan, and mozzarella from New York pizza. Swiss cheese bacteria were more common in midtown Manhattan and the financial district. Bacteria used to ferment cabbage for kimchi and sauerkraut appeared in the financial district and Bay Ridge. Mason also said the computer found cucumber DNA all over the city.
+
+Bacteria linked to sickness and infections were very common. Bacteria that can cause diarrhoea and nausea were common. They found both harmless and harmful E.coli, but mostly harmless. Bacteria that can cause skin infections and urinary-tract infections were also common. A species that produces tetanus appeared in Soho. Bacteria that cause dysentery appeared at one station in the Bronx and another in Harlem.
+
+The team collected more than 1,000 samples from all of New York’s 466 open subway stations. They studied the material with a DNA sequencer and then a supercomputer with genetic databases. They identified 15,152 different species, and nearly half were bacteria.
+
+The researchers wrote that the good news is these “potentially infectious agents” do not seem to be spreading sickness through New York. Instead, they seem to be normal “co-habitants” and may even be essential. They represent a normal, “healthy” metagenome profile of a city.
+
+The researchers conclude that the subway and the city are about as safe as people thought.
+
+Mason said people should not worry about getting urinary-tract infections from subway seats. He said people should wash their hands, and also get sleep, eat salads, and go to the gym, and that this advice is the same today as it was yesterday. He added that he feels more confident riding the subway.
+
+Many findings were not surprising. Busy stations like Grand Central and Times Square had more bacteria and more different kinds. The subway had many bacteria linked to skin. The Bronx had the greatest variety of bacteria, and Staten Island, with only three stops, had the lowest.
+
+The researchers found marine bacteria at South Ferry, a station that flooded during Hurricane Sandy. They were surprised because some of these bacteria are usually linked to Antarctica and fish.
+
+Mason said the next steps are studies in other cities, which have started in Paris, São Paulo, and Shanghai. They will also keep studying New York, for example to see how the microbiome changes with the seasons. He hopes the research will give a “baseline” for health officials and geneticists. It could help health officials be better prepared to prevent diseases and track pathogens.

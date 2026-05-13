@@ -1,0 +1,19 @@
+group,metric,mean,median,std,skew,min,max
+Human simplified example,Meaning similarity (SBERT),0.891,0.901,0.053,-0.932,0.699,0.978
+Human simplified example,Change in age of acquisition,-18.507,-18.022,16.523,-0.651,-72.882,19.197
+Human simplified example,Change in accessibility score,0.302,0.308,0.369,0.331,-0.593,1.434
+Human simplified example,Change in reading difficulty,-2.976,-2.761,1.204,-0.653,-6.581,-0.58
+Human simplified example,Change in vocabulary variety,-26.358,-24.284,17.191,-0.976,-104.81,5.479
+Human simplified example,Change in academic vocabulary proxy,-0.027,-0.025,0.019,-0.597,-0.089,0.022
+AI version A,Meaning similarity (SBERT),0.902,0.911,0.048,-1.49,0.669,0.973
+AI version A,Change in age of acquisition,-19.27,-18.741,12.473,-0.068,-49.638,19.086
+AI version A,Change in accessibility score,0.315,0.267,0.348,0.03,-0.893,1.399
+AI version A,Change in reading difficulty,-3.984,-3.87,1.317,-0.38,-8.619,-1.173
+AI version A,Change in vocabulary variety,-15.462,-13.277,15.999,-0.046,-57.576,31.957
+AI version A,Change in academic vocabulary proxy,-0.026,-0.024,0.016,-0.618,-0.084,0.014
+AI version B,Meaning similarity (SBERT),0.904,0.91,0.046,-1.6,0.629,0.979
+AI version B,Change in age of acquisition,-21.249,-21.054,12.986,-0.526,-60.713,11.973
+AI version B,Change in accessibility score,0.341,0.328,0.341,0.196,-0.441,1.47
+AI version B,Change in reading difficulty,-3.971,-3.758,1.312,-0.423,-8.591,-0.949
+AI version B,Change in vocabulary variety,-13.477,-12.93,15.455,0.419,-53.364,52.801
+AI version B,Change in academic vocabulary proxy,-0.03,-0.029,0.016,-0.548,-0.08,-0.0

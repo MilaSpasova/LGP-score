@@ -1,0 +1,25 @@
+US researchers say that government programmes that collect many people’s phone records are a clear danger to the privacy of ordinary citizens. They showed that even basic phone logs can be used to identify people and find private details about their lives.
+
+Two scientists at Stanford University used anonymous call and text “metadata” (information about who called whom, when, and for how long). They did not have the message or call content. Still, they could figure out people’s names, where they lived, and the names of their partners.
+
+The same data also helped them find very private information. They found that one man owned a rifle. They found that another man had recently been diagnosed with an irregular heartbeat. Other data suggested a new pregnancy and a person with multiple sclerosis.
+
+The results show how powerful telephone metadata can be, especially when it is combined with public information from services like Google, Yelp, and Facebook. The content of communications has stronger legal protections than metadata. Security services have known for a long time that metadata is valuable. Stewart Baker, a former top lawyer at the US National Security Agency (NSA), said after Edward Snowden’s revelations: “Metadata absolutely tells you everything about somebody’s life.”
+
+Patrick Mutchler, a computer security researcher at Stanford, said people who collect metadata understand how powerful it is. But the public often does not, because few studies have shown how much metadata can reveal. He said the new results give “hard evidence.”
+
+For the study, the researchers recruited 823 people. These people agreed to let metadata be collected from their phones using an Android app. The app also got information from their Facebook accounts, which the scientists used to check their results. The researchers collected metadata on more than 250,000 calls and over 1.2m texts.
+
+Analysts who used the NSA’s metadata system were first allowed to look up to three “hops” away from a person. One hop meant a call from the target person to another number. Two hops meant a call from that number to another. The records analysts could see went back five years. Now the limit is two hops and at most 18 months.
+
+In the journal Proceedings of the National Academy of Sciences, Mutchler explains that he and another graduate student, Jonathan Mayer, found a lot of personal information, including sensitive information, with very little money. With computer searches and manual work, they identified 82% of people’s names. They also found the names of businesses people called. When they put these on a map, they saw groups of local businesses that likely surrounded the person’s home. Using this method, they named the city where people lived 57% of the time. They were almost 90% accurate in placing people within 50 miles of their home. Mutchler thinks some mistakes happened because people did not update their Facebook page when they moved, for example to go to college.
+
+Next, the scientists looked at more personal details. Using a simple computer program to study calling patterns, they guessed which volunteers were in a relationship. After they knew a person had a partner, they said it was easy to identify who the partner was.
+
+In the last part of the study, the researchers went even further to see what sensitive information they could learn from telephone metadata. They looked at calls to and from a list of organizations, including hospitals, pharmacies, religious groups, legal services, firearms sellers, and repair firms. From this, they built detailed stories from people’s lives.
+
+Metadata from one person showed a long call from a cardiology centre, a short call with a medical lab, many short calls from a local pharmacy, and calls to a hotline for abnormal heart-rate monitoring devices. Another person often called a local gun supplier that specialized in semiautomatic rifles, and later made long calls to a customer support hotline run by a major gun manufacturer that produced the rifles. Data from two other people suggested one had multiple sclerosis and the other had just become pregnant.
+
+Mutchler said these examples show what two graduate students can do with limited resources. He said the findings should make policymakers think again before approving mass surveillance programmes. The scientists wrote that large metadata surveillance programmes, like the NSA’s, will expose highly confidential information about ordinary citizens. They added that future policy must balance national security and civil liberties, and should use input from relevant sciences.
+
+Ross Anderson, a professor at Cambridge University, said the study gives numbers that people can use in discussions. He said that with the right analysis of nation-scale communications data, you can learn large amounts of sensitive information about everyone. He said people suspected this before, but now there is data to show it.

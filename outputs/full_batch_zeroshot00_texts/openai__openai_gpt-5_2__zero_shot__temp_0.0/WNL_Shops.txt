@@ -1,0 +1,27 @@
+In stores, cameras watch you. If you pick up something like a boot, a camera can make sure you do not hide it in your bag. But new technology is making stores watch different things. They are less focused on stealing and more interested in your age, sex, size, and what you look like.
+
+A few months ago, the IT firm Computer Sciences Corporation (CSC) wrote a report. It said about 30% of retailers use facial recognition to track customers inside stores. Facial recognition can identify people by studying faces and comparing them to a database. It can use devices like Intel RealSense cameras. These cameras can study facial expressions and even the clothing brands someone is wearing.
+
+Joe Jensen from Intel’s Retail Solutions Division says the goal is not to build databases about specific people. He says the goal is to build general models about people’s lifestyles and shopping habits. He says shops do not need to know one exact customer. They want to know the kind of shopper a person is, and what people like that have done in the past.
+
+If stores combine recognition technology with past customer data, they can guess what a person might do in a shop. For example, if a size-10 woman wearing a gold necklace walks quickly toward the sock aisle, a store might guess she wants to buy socks. Then the store could show ads on screens aimed at her. If she looks like someone who wants socks, it will show sock ads.
+
+This may sound familiar because the internet has used these ideas for years. If you search for something on Amazon, you may see ads for similar products on other sites. If you show interest in canoeing, you may see canoe ads in many places. But using these systems in real stores is not as easy as copying what happens online. People do not react to cameras the same way they react to browser cookies.
+
+Hoxton Analytics, a team of data scientists in London, made a system using machine learning and artificial intelligence. It groups people by the shoes they wear. By looking at the style and size of shoes as people walk past a sensor, the system can guess a customer’s gender with 75 to 80% accuracy.
+
+Owen McCormack, the CEO of Hoxton Analytics, says the system was partly a response to facial recognition. He asked why not use clothes to understand basic information about people. He said if you saw a picture of someone’s body, you could probably guess their gender. But aiming a camera at someone’s chest or hips can feel as creepy as facial recognition. So they focused on shoes instead.
+
+The word “creepy” is often used when people talk about tracking customers in stores. Retailers and data scientists want to get information without seeming too intrusive.
+
+For Hoxton Analytics and the stores using it, the answer is to look down at shoes. This shows how people react to being watched in real life. It suggests there are limits that do not exist on the internet. If a camera aims at our bodies, we can feel invaded. But it is not clear if judging people by their shoes is really less invasive.
+
+McCormack says the key point is that they are not collecting personally identifiable information. He says shops already do many invasive things, but people may not know about them. He says if a shop knows if someone is male or female, ads can be more efficient. If everyone in the shop is male, the shop might advertise PlayStations instead of hairdryers.
+
+Hidden monitoring can help shops improve results while customers do not notice. But if stores add screens that change and show targeted ads, it is harder to hide that a machine is watching you. Retailers say they do this to give a personal shopping experience, but it is still a grey area. Many people still think it feels creepy.
+
+Retailers understand that physical shops want some of the same information that online stores get. People allow this online, so why not offline? But the rules feel different in a mall than between websites. In a mall you can walk freely without a pop-up asking you to accept cookies, so consent works differently.
+
+Younger people may feel less bothered because they grew up with online life first and physical shops second. The CSC report said 72% of people aged 55 and over were very uncomfortable with these technologies in physical shops. Only 51% of 16 to 24 year olds said the same.
+
+Is this because younger people know digital technology better, or because they trust big organizations that offer free services? Is a technology always creepy in the same way, or does it change as society accepts it? Either way, more and more “eyes” are watching between the store shelves, and they care a lot about what you are wearing.

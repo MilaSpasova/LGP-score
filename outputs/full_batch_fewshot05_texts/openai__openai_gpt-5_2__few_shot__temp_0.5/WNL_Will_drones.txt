@@ -1,0 +1,23 @@
+How close are we to a world where drones bring packages? Amazon says it could happen soon. Other people are not sure. They say the next step is not only about new inventions. It is also about public safety.
+
+Paul Misener, Amazon’s vice-president of global public policy, spoke at a congressional hearing recently. He said Amazon would be ready when all the rules are in place. He did not explain the rules in detail. He only joked to a congressman that a basket of fresh fruit was on the way to his house to show the technology works.
+
+The Federal Aviation Authority (FAA) plans to have rules for commercial unmanned aircraft by June 2016. But the technology still needs work. Also, bigger machines are not allowed yet. The rules will cover only drones up to 25kg. The FAA also says that if many radio-controlled flying robots are in the sky, they must use different radio frequencies, and the signals must not be easy to jam or hijack.
+
+Professor Sajiv Singh from the Carnegie Mellon University Robotics Institute runs a “critical cargo delivery” company called NearEarth. He said flying a modern drone is like giving it simple steps: go to this height, do a short task, then go back home. But even short flights from a moving landing pad create serious planning problems.
+
+Singh said companies do not want to deliver from an empty place to another empty place. They want to deliver from a warehouse to a customer, often in a city or suburb. In those places, a drone will face dangers on the way and must notice them. The map might not show some land features unless you already mapped that exact route. Even then, there could be construction equipment that was not there before. GPS signals might be blocked or partly blocked, so the drone may think it is in the wrong place. Singh said these problems can be solved, but it is difficult.
+
+Another big problem is keeping radio contact with the drone, and planning what to do if the contact stops. Roboticist Daniel Huber said that if you use an off-the-shelf UAV (unmanned aerial vehicle), it may keep going and crash. He said engineers can fix this, but the fix is not yet a common industry standard.
+
+Jay McConville from Lockheed Martin MST said you cannot do everything with a 25kg aircraft. Lockheed Martin is trying to make drone controls simpler and less like complex flight simulators. He said operators do not want to focus on every small detail of the aircraft. They want the end result. They want to see the vehicle’s status and video on a handheld device or a laptop.
+
+Huber said that most of the needed technology is already here. He is working on a program that uses drones to inspect things like pipelines, telephone lines, and bridges. He said they made an algorithm where you draw a box around an area, and the drone can fly by itself around the area, look at every surface, and report back.
+
+Huber also said that Amazon has said many packages are light. He said a drone can carry 1 kilogram for 15 minutes. If a vehicle can go into a neighbourhood, it can deliver from a base there. You need a 15-minute distance, and many off-the-shelf drones can do that. He said this can help keep nearby people safer. He said bigger drones are more dangerous.
+
+Huber said some planning problems are being solved in dramatic ways. He said a disaster relief drone company, SkyCatch, showed a robot that could take off by itself and land on its own charging station when it needed to. It could land, take off, and when the battery got low, land, swap batteries, and take off again.
+
+Safety is still a major concern. Singh said that for a commercial aircraft to be considered safe to fly, it must show only one serious failure in every 1m hours. He said drones are still “one or two orders of magnitude” away from that level. He said the Reaper drone has one failure in 10,000 hours. He also said an oil leak does not count as a catastrophic failure. Something has to fall out of the sky. He said drones are getting closer to the goal, and there is a lot of interest.
+
+Singh said flying is naturally dangerous, so the safety standards are very high. He said that on commercial airlines, a small part failure can mean the plane must go back to the gate. He said this is a mature industry with 60 years of experience. He said he does not want a drone to fall onto a crowded highway. Singh said part of the answer is simple planning for emergencies. If something fails, the drone must do something reasonable.

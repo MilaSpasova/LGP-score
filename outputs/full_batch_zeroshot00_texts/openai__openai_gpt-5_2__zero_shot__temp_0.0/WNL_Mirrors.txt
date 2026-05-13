@@ -1,0 +1,25 @@
+Scientists have made a mirror that can send heat from a building into cold space. They hope it could replace some air-conditioning on Earth.
+
+Researchers think this mirror could greatly cut the energy used to keep places like offices and shopping centres cool. In the US, about 15% of building energy is used for air conditioning. The researchers’ calculations say that, in some cases, the mirror could remove the need for extra cooling.
+
+In a test on a roof at Stanford, California, scientists compared different surfaces in sunlight. A black surface became 60C hotter than the air. Bare aluminium became 40C hotter than the air. But the mirror was up to 5C cooler than the air.
+
+Shanhui Fan at Stanford University led the work. He said that if you cover a large part of a roof with the mirror, it could save a lot of power. In some situations, their calculations say it could completely offset air conditioning.
+
+Buildings heat up in many ways. Boilers and cooking make heat. In hot countries, warm air enters through doors and windows. Sunlight and infrared heat from the sun also warm buildings.
+
+The Stanford mirror reflects 97% of the visible light that hits it. More importantly, it also works like a heat radiator. When it warms up, it sends out heat as infrared light at a special wavelength. This infrared light can pass through the atmosphere and go into space.
+
+To cool something, engineers say you need a “heat sink,” a place to put unwanted heat. The heat sink must be cooler than the thing you want to cool. For example, ice can cool a bottle of wine. The Stanford mirror uses the universe as the heat sink.
+
+The mirror has several very thin layers. The first layer is reflective silver. On top are layers of silicon dioxide and hafnium oxide. These layers help it reflect light and also help it send out heat. When silicon dioxide heats up, it gives off infrared light at about ten micrometres. Very little in the air absorbs this wavelength, so the heat can go straight to space. The whole mirror is about two micrometres thick, or two thousandths of a millimetre.
+
+The scientists wrote in Nature that the cold darkness of the universe can be used as a renewable resource for cooling, even in the hottest part of the day. In tests, the mirror had a cooling power of 40 watts per square metre at ambient temperature.
+
+Fan wrote that installing the mirrors could cost between $20 and $70 per square metre. He also calculated a yearly electricity saving of 100MWh on a three-storey building.
+
+Fan said the mirror could cool buildings, or other objects, by putting it in direct contact with them. Putting it only on a roof would block heating from sunlight, but it would not remove much heat from inside the building. He said it would more likely cool water or another fluid, and then that fluid could be pumped around the building.
+
+He said the mirrors would not be a good way to slow global warming, because roof space is only a small part of Earth’s surface. He said their goal is to reduce electricity use.
+
+Marin Solja__i__, a physicist at the Massachusetts Institute of Technology, said he is excited about the idea. He said it could be used on buildings so people spend much less on air conditioning, or maybe would not need it at all. He said putting it on top of shopping malls could give strong cooling if the surface area is large enough.

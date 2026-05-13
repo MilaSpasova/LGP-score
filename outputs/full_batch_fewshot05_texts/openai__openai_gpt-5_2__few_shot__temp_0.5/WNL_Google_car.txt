@@ -1,0 +1,37 @@
+A car that can go only 25 mph, has two seats, and has no pedals or steering wheel may not look very exciting at a car show. But Google in the US surprised the car and taxi industries when it showed a new driverless car.
+
+The electric car is being tested near Google’s headquarters in Mountain View, California. It has no normal controls, including foot pedals. Instead, a smartphone app calls the car and tells it where to go. There is one STOP button between the two seats if the people inside need to stop the computer.
+
+The car does all the driving jobs: finding the route, steering, speeding up, and braking.
+
+Google plans to build about 100 test cars for a two-year test. Google co-founder Sergey Brin said the car is still a prototype. He said the project is meant to change the world for people who do not have good transportation today.
+
+Brin said it felt relaxing because there was no steering wheel and no pedals. After about ten seconds, he forgot about it. He said it felt like riding a chairlift alone.
+
+Google says the main goal is safety. The car has foam on the front to absorb impacts and a plastic windscreen. Google says this should make it much safer for pedestrians.
+
+The cars were built specially by a company in Detroit, but Google has not named it. Google will use the cars in a pilot programme. The cars are not for sale yet.
+
+A big problem is that the cars need very detailed maps before they can drive on roads. They cannot collect and process enough information fast enough while driving.
+
+Right now, Google has very detailed maps of about 2,000 miles of roads in California. But California has more than 170,000 miles of public roads.
+
+Google says it may license the technology to normal car makers after it improves it. Some team members worked on the project for more than ten years, even before they joined Google.
+
+Some people worry that driverless cars could replace taxi drivers.
+
+Dennis Conyon, the southeast director for the UK National Taxi Association, said that if there is no driver, drivers will lose their jobs. He said it would greatly affect workers.
+
+London has about 22,000 licensed black cabs. Conyon says about 100,000 people drive taxis for hire in the UK.
+
+Steve McNamara, general secretary of the London Taxi Drivers’ Association, said driverless cars will not come to London for 20 or 25 years. He also said maybe by then there will be a charging point, because there is not a single one in London now.
+
+Other companies, like Volvo, Ford, and Mercedes, are working on cars that help the driver. Unlike Google’s car, these cars still have driver controls.
+
+Chris Urmson, the director of Google’s self-driving car project, said the new test cars have no steering wheel or brakes because a human inside might not be able to take over in an emergency. He said it was simpler to have only an emergency stop button.
+
+Urmson said the cars will be very basic. Google wants to learn quickly and change them quickly. He said the cars will take you where you want to go by pushing a button. He said this is an important step to make roads safer and to improve travel for millions of people.
+
+So far, Google’s self-driving cars have driven 700,000 miles with no accident caused by the computer. Google says thousands of people die on the roads each year, and about 80% of crashes are caused by human error.
+
+But Conyon says he has a better record. He is 79 years old, has driven a taxi for 50 years, and says he has never had an accident.

@@ -1,0 +1,27 @@
+Scientists have made an “atlas of the brain.” It shows how the meanings of words are spread across different parts of the brain. The atlas looks like a colorful quilt on the brain’s surface. It shows groups of related words in small areas.
+
+Jack Gallant, a brain scientist at the University of California, Berkeley, said their goal was to build a big map that shows how the brain represents word meaning.
+
+No single place in the brain stores just one word or idea. One small brain area can link to many related words. Also, one word can use many different brain areas. These areas work together as networks for meanings, like “life” and “love,” “death” and “taxes,” “clouds,” “Florida,” and “bra.”
+
+One researcher who did not help with the study called the atlas a “tour de force.” The atlas shows how new brain-imaging tools can change what we know about how the brain works. In the future, this technology could help medicine and other fields.
+
+Alexander Huth, the first author of the study, said this method might help decode what words a person is hearing, reading, or maybe even thinking. One possible use is a language decoder. It could help people who cannot speak because of motor neurone disease or locked-in syndrome communicate through a computer.
+
+To build the atlas, the scientists recorded brain activity while people listened to stories. The stories were read from The Moth Radio Hour, a radio show in the United States. The scientists matched the story text with the brain data. They showed that groups of related words caused responses in about 50,000 to 80,000 pea-sized spots across the cerebral cortex.
+
+Huth used The Moth Radio Hour because the stories are short and interesting. If the stories are interesting, people are more likely to pay attention. Seven people listened to two hours of stories each while lying in a scanner. Each person heard about 25,000 words, including more than 3,000 different words.
+
+The atlas shows that related words often use the same brain areas. For example, on the left side of the brain above the ear, one tiny area responds to the word “victim.” The same area also responds to “killed,” “convicted,” “murdered,” and “confessed.” On the right side of the brain near the top of the head, one area responds to family words like “wife,” “husband,” “children,” and “parents.”
+
+A word is shown in more than one brain spot because words can have more than one meaning. One brain area responds to the word “top” with other clothing words. But “top” also activates other areas. One responds to numbers and measurements, and another to buildings and places. The scientists also made an interactive website so the public can explore the atlas.
+
+The atlases looked similar for all the people in the study. This suggests their brains organized word meanings in a similar way. But the scientists only scanned five men and two women. All were native English speakers, and two were authors of the Nature paper. People from other backgrounds and cultures may have different brain atlases for meaning.
+
+With this atlas, researchers can study brain networks for very different ideas, from numbers to murder and religion. Gallant said the idea of murder is represented a lot in the brain.
+
+Using the same data, the team has started new atlases for other parts of language, from phonemes to syntax. But an atlas for story structure has been hard to make. Gallant said that when they choose story features, people tell them the features are not the right ones.
+
+Uri Hasson, a neuroscientist at Princeton University, praised the work. He said it showed how the brain works in a real-world situation, not just with one word or one sentence. He said the next step is a bigger and more exact atlas. Hasson believes it may one day be possible to rebuild the words a person is thinking from brain activity. This raises huge ethical questions. A less harmful use could be checking if political messages were understood by the public.
+
+Lorraine Tyler, a cognitive neuroscientist at the University of Cambridge, also called the work a “tour de force.” But she said the atlas does not yet show small differences in word meanings. She said this research is important, but there is still a lot to learn about how the brain represents word meaning.

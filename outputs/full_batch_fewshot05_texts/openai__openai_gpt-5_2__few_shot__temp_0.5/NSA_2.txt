@@ -1,0 +1,25 @@
+The Senate Intelligence Committee approved a bill about the National Security Agency (NSA). The bill would make the NSA’s large collection of US phone records more open to the public, but it would still let the program continue.
+
+Chairwoman Dianne Feinstein sponsored the bill. It allows the NSA to keep collecting phone metadata from millions of Americans for 90-day periods, and to keep the data. Some lawmakers have suggested a different plan: phone companies would keep the metadata instead. The committee passed the bill by a vote of 11 to 4. Now it can go to a vote in the full Senate.
+
+Under the bill, analysts can search the data if they have a “reasonable suspicion” that someone is connected to international terrorism. The bill also lets the NSA continue watching foreigners outside the US if they enter the US for a short time, up to 72 hours.
+
+The bill challenges a bill by Senator Patrick Leahy that would stop collecting phone records inside the US. Mark Udall, a leading member of the committee, opposed Feinstein’s bill. He said it did not change enough. He said the NSA’s surveillance of Americans’ private information does not respect constitutional values and needs major reform.
+
+Another Democratic committee member, Ron Wyden, said the bill keeps “business as usual” and is not meaningful reform. Feinstein defended the bulk collection program. She said it is legal, has oversight from Congress and courts, and helps national security. But she also said the public trust needs to be rebuilt, with more transparency and support for privacy protections.
+
+Feinstein said the bill would improve transparency and oversight in several ways. It would require a public report each year on how many searches are done in the phone metadata database, and how often the program leads to an FBI investigation or a probable cause order. It would require the foreign intelligence surveillance court to limit how many people at the NSA can approve or run searches of the call-records database. It would create criminal penalties of up to 10 years in prison for intentionally and illegally accessing data collected under the Foreign Intelligence Surveillance Act (FISA). It would also require the FISA court to limit how many contacts an analyst can get back from a search of bulk communication records.
+
+After the hearing ended, Feinstein strongly supported the main domestic program. She said many people misunderstand the NSA database program and how important she thinks it is for protecting the country.
+
+Independent legal experts also criticized the bill. They said it could lead to a fight with the USA Freedom Act, a bill by Leahy and Jim Sensenbrenner that would ban bulk collection of Americans’ phone records. Elizabeth Goitein of the Brennan Center for Justice said the two bills show two different ideas. She asked if the government should need a reason to suspect wrongdoing before collecting Americans’ personal information in large databases. She said Leahy and Sensenbrenner say yes, and Feinstein says no.
+
+Wyden said recent attention to the NSA spying on foreign leaders had distracted people from mass surveillance inside the US. He said collecting information about foreign leaders matched what he had long understood as a committee member. He said that affects foreign policy, but his top priority is ending mass digital surveillance of millions of law-abiding Americans.
+
+Feinstein said she was “totally opposed” to spying on foreign leaders like German Chancellor Angela Merkel. But she has strongly supported the bulk collection of Americans’ phone records.
+
+Wyden said Americans never agreed to give up constitutional freedoms for the appearance of security. He said they will keep fighting, and it will take a long time.
+
+Separately, Feinstein said James Clapper, the Director of National Intelligence, agreed to give her a written statement about a Washington Post story. The story said the NSA intercepted data sent between Google and Yahoo data centres. Feinstein said she would not decide what she thought until she saw Clapper’s answer. Her strong support for the domestic phone records program suggests she is not ready to expand her criticism of the NSA beyond being “totally opposed” to spying on allied foreign leaders.
+
+Wyden did not comment on the Washington Post report. But the senators said it could affect the privacy of Americans’ communications. Wyden said global communication systems are now connected, so spying on foreigners can create more privacy problems for US citizens.

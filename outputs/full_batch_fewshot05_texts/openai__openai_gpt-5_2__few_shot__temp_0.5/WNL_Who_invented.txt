@@ -1,0 +1,31 @@
+Sometimes life is not fair. Mark Zuckerberg made Facebook and is now worth about $48bn. James Goodfellow also invented something that millions of people use every day: the cash machine (ATM). But it did not make him rich. He got only £10 from the patent, and he has not earned any more money from it.
+
+Goodfellow says it is hard for him to see bankers get £1m bonuses. He asks what they did that was more useful than what he did.
+
+He is also annoyed that people do not see him as a good example for inventors and engineers. His invention made billions of pounds, but he got nothing. He thinks this makes people not want to copy his path.
+
+For many years, people argued about who should be called “the inventor of the ATM”. In 2005, John Shepherd-Barron got a UK honour as the “inventor of the automatic cash dispenser”. But now the UK government says Goodfellow invented the ATM. So it seems his place in history is now sure.
+
+In the mid-1960s, Goodfellow worked as a development engineer. He was asked to find a way for customers to take out cash from banks on Saturdays. Many people could not go to the bank during the week. So he worked on a machine that could give cash to a known customer. To do this, he invented the PIN (personal identification number) and a coded token.
+
+The token was a plastic card with holes in it. The patent described a system with a card reader and ten buttons in a wall outside the bank. The customer put the card in, then pressed the buttons for the PIN to get a pack of banknotes.
+
+Except for the holes in the card, this is very similar to today’s ATM. After Goodfellow showed a model that worked, prototypes were made. The first machines were installed in 1967.
+
+At the same time, Shepherd-Barron was making a competing machine. His machine did not use plastic cards. It used cheques with carbon-14, a mildly radioactive substance. The machine found the carbon-14, checked the cheque with a PIN, and then paid the cash.
+
+Many people accept that Shepherd-Barron’s machine was the first ATM installed and used by the public. The first one opened at a bank in north London on 27 June 1967. This was one month before Goodfellow’s ATM was shown to the public. But Goodfellow’s patent was filed on 2 May 1966, which was 14 months before the London machine started.
+
+The rivalry grew when Shepherd-Barron got an official honour. Goodfellow says his big regret is that he did not speak up until Shepherd-Barron got the OBE in 2005. He says this honour was given because Shepherd-Barron was called the inventor of the cash dispenser, and that upset him.
+
+Shepherd-Barron is not alive now to argue. But in a 2005 interview, he criticized Goodfellow. He said the banks cared about the whole system idea, and he called Goodfellow’s invention “an elegant failure”.
+
+Cash machines have spread all over the world. New things like contactless payments, bitcoin, and wearable technology do not seem to stop their growth. There are now 3m ATMs worldwide, and the number was forecast to reach 4m by 2020.
+
+Goodfellow agrees he did not invent the idea of a machine that gives cash. But he says he invented a way to do it. He compares this to the Wright brothers: they did not invent the idea of flying, but they made it work and got the credit. He thinks he should get the credit for the cash dispenser.
+
+This is now starting to happen. The website ATMInventor.com says the ATM idea was from Luther George Simjian. It says the ATM as we know it was James Goodfellow in Scotland, because of his 1966 patent. It says the ATM design people recognize today was John D White for Docutel in the US.
+
+Goodfellow’s work is also officially recognized in the latest edition of a 180-page guidebook called Life in the United Kingdom. In a section on “great British inventions of the twentieth century”, it says that in the 1960s, James Goodfellow (1937-) invented the cash-dispensing ATM, or “cashpoint”.
+
+So after many years, people now talk about Goodfellow with famous inventors like John Logie Baird (television), Alan Turing (the Turing machine), Sir Frank Whittle (jet engine), and Sir Tim Berners-Lee (World Wide Web). Goodfellow says he thinks he spent the £10 in the 1960s on a wild night out. He says it did not change his life. But he says he had a good working life, and he was happy doing his job.

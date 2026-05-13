@@ -1,0 +1,25 @@
+group,metric,mean,median,std,skew,min,max
+Human Advanced,Age of acquisition (AoA),359.45,361.404,28.504,-0.115,288.887,440.894
+Human Advanced,Overall accessibility score (CLI),-0.117,-0.145,0.761,0.17,-1.727,1.717
+Human Advanced,Academic vocabulary proxy,0.096,0.092,0.04,0.696,0.022,0.23
+Human Advanced,Reading difficulty (FKGL),11.131,11.005,1.922,0.005,6.398,15.119
+Human Advanced,Vocabulary variety (MTLD),110.285,109.463,22.683,1.038,65.671,231.572
+Human Advanced,Dictionary coverage,0.511,0.515,0.051,0.12,0.387,0.683
+Human Elementary,Age of acquisition (AoA),340.944,340.818,31.636,-0.051,264.0,416.947
+Human Elementary,Overall accessibility score (CLI),0.185,0.112,0.885,0.218,-1.606,2.279
+Human Elementary,Academic vocabulary proxy,0.069,0.065,0.034,0.78,0.012,0.172
+Human Elementary,Reading difficulty (FKGL),8.156,8.071,1.397,0.365,5.02,12.239
+Human Elementary,Vocabulary variety (MTLD),83.927,83.294,15.882,0.58,50.488,137.813
+Human Elementary,Dictionary coverage,0.56,0.564,0.054,-0.038,0.445,0.693
+AI version A,Age of acquisition (AoA),340.18,341.729,28.943,0.211,274.78,423.61
+AI version A,Overall accessibility score (CLI),0.149,0.118,0.774,0.058,-1.829,1.969
+AI version A,Academic vocabulary proxy,0.07,0.067,0.034,0.749,0.009,0.191
+AI version A,Reading difficulty (FKGL),7.147,7.035,1.307,0.481,4.333,11.059
+AI version A,Vocabulary variety (MTLD),94.823,93.599,21.025,1.228,51.918,201.536
+AI version A,Dictionary coverage,0.564,0.56,0.052,0.142,0.419,0.729
+AI version B,Age of acquisition (AoA),338.201,337.421,28.712,0.2,269.465,421.954
+AI version B,Overall accessibility score (CLI),0.168,0.17,0.78,0.008,-1.562,2.041
+AI version B,Academic vocabulary proxy,0.067,0.062,0.033,0.934,0.012,0.188
+AI version B,Reading difficulty (FKGL),7.16,7.049,1.305,0.363,3.852,10.959
+AI version B,Vocabulary variety (MTLD),96.808,94.969,21.317,1.156,51.142,202.283
+AI version B,Dictionary coverage,0.57,0.569,0.052,0.168,0.433,0.728

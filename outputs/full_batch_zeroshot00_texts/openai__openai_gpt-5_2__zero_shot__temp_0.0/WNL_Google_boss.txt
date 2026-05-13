@@ -1,0 +1,19 @@
+Google vice-president Vint Cerf warned that many digital things could be lost forever. These include blogs, tweets, photos, videos, court rulings, and emails. The problem is that the computer programs needed to open them may stop working in the future. He said this could create a “forgotten generation or even a forgotten century.” He called the problem “bit rot,” when old computer files turn into useless junk.
+
+Cerf wants people to create something like “digital vellum.” This would keep old software and hardware, so very old files could still be opened. He said we save a lot of daily life in digital form, like email, tweets, and the world wide web. If we want to keep this history, we must make sure digital files can still be read far in the future.
+
+Some experts say the problem may not be as big as Cerf suggests. But there is an irony: people digitize music, photos, letters, and documents to save them for a long time. Yet the programs and machines needed to read the files keep changing and going out of use.
+
+Cerf said we are throwing data into something like an “information black hole” without noticing. We think digitizing will save things, but without extra steps the digital versions might be no better, and might even be worse, than the original objects. He said if you really care about photos, you should print them out.
+
+Ancient people did not have this problem. Writing on clay tablets or papyrus could be read with just eyes. But future scholars studying our time may find PDFs, Word documents, and many other file types. These can only be read with special software, and sometimes special hardware too.
+
+The problem already exists. In the 1980s, people saved files on floppy disks. They loaded Jet Set Willy from cassette to the ZX spectrum, used a Quickfire II joystick, and stored Atari game cartridges in the attic. Even if the disks and cassettes still work, the equipment to use them is now mostly found in museums.
+
+Cerf also warned that important political and historical documents may be lost. He talked about the 2005 book Team of Rivals by American historian Doris Kearns Goodwin. She used real letters she found in libraries in the US to rebuild conversations from Abraham Lincoln’s time. Cerf said that today those letters would be emails, and it would be very hard to find them 100 years from now.
+
+Cerf agreed that historians will try to save things that people today think are important. But he said we often do not know what will be important until hundreds of years later. He gave an example: people learned new things after the Archimedes palimpsest was found. It was hidden under the words of a Byzantine prayer book from the thirteenth century. He said we often learn important things from objects that were saved only by chance.
+
+Researchers at Carnegie Mellon University in Pittsburgh are working on a possible solution. Mahadev Satyanarayanan takes digital “snapshots” of computer hard drives while they run software. Later, these snapshots can be uploaded to a computer that imitates the old one. This can let a computer read files that would otherwise be unreadable. In a project called Olive, they saved Mystery House (1982, Apple II), an early version of WordPerfect, and Doom (1993).
+
+But new technology is only part of the problem. It may be even harder to deal with legal permission to copy and store old software. When IT companies go out of business or stop supporting products, they may sell the rights to someone else. Then it can be very hard to get approval. Cerf said we may need to think about preservation rights in copyright, patents, and licensing, because we want to preserve things for hundreds to thousands of years.

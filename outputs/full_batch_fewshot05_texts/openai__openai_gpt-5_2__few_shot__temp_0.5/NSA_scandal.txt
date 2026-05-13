@@ -1,0 +1,25 @@
+A top-secret document says the National Security Agency (NSA) got direct access to the systems of Google, Facebook, Apple, and other big US internet companies. The document says this is part of a secret program called PRISM. PRISM lets officials collect things like search history, emails, file transfers, and live chats.
+
+The Guardian checked the document and said it is real. It is a 41-slide PowerPoint marked top secret and not to be shared with foreign allies. It was apparently used to train intelligence workers. It says the NSA can collect information “directly from the servers” of large US companies. The slides suggest the companies help with the program, but the companies that answered questions said they did not know about any such program.
+
+Google said it cares about user data security. Google said it gives user data to the government only when the law requires it, and it checks each request carefully. Google also said it does not have a “back door” that lets the government enter its systems to get private user data.
+
+Several senior tech leaders said they did not know about PRISM or anything like it. They said they would not take part in such a program. One said, “If they are doing this, they are doing it without our knowledge.” An Apple spokesman said he had “never heard” of PRISM.
+
+The document says the NSA access became possible because of changes in US surveillance law. These changes started under President Bush and were renewed under Obama in December 2012. The program allows wide surveillance of live messages and stored information. The law allows targeting of customers of the companies who live outside the US. It also allows targeting of Americans if their communications include people outside the US. It could also allow messages made fully inside the US to be collected without warrants.
+
+News about PRISM came after another leak to the Guardian on Wednesday. That leak was a top-secret court order that forced Verizon to hand over phone records of millions of US customers. PRISM adds to the debate about how large US surveillance is. Unlike the Verizon phone records, PRISM can include the content of messages, not only metadata.
+
+The document claims some of the world’s biggest internet brands have been part of the program since it began in 2007. It says Microsoft was first, with collection starting in December 2007. Then came Yahoo in 2008; Google, Facebook, and PalTalk in 2009; YouTube in 2010; Skype and AOL in 2011; and Apple in 2012. The document says the program is still growing and other providers will join. Together, these companies cover most online email, search, video, and communication networks. The type and amount of data collected from each company is different.
+
+Under US law, companies must follow legal requests for user communications. But PRISM, the document says, gives intelligence services direct access to company servers. The NSA document says the operations have the “assistance of communications providers in the US.”
+
+The news also supports worries raised by some US senators when the FISA Amendments Act (FAA) was renewed in December 2012. They warned about how much surveillance the law could allow and about weak safeguards. When the FAA first started, supporters said the NSA could not get electronic communications without the consent of the phone and internet companies that hold the data. But PRISM makes that consent unnecessary, because it lets the NSA take communications directly from company servers.
+
+A chart in the document lists many kinds of data the NSA can get, including email, video and voice chat, videos, photos, voice-over-IP chats (like Skype), file transfers, and social network details. The document is dated April 2013. Leaks like this are very rare for the NSA, which is known for strong secrecy.
+
+The document says PRISM lets the NSA get targeted communications without asking the service providers for them and without getting a separate court order for each case. It says the NSA can go into the servers of the companies in the program, collect stored communications, and also collect information in real time about targeted users.
+
+A senior government official said the Guardian and Washington Post articles describe collection under Section 702 of the Foreign Intelligence Surveillance Act (FISA). The official said this law does not allow targeting any US citizen or any person inside the United States. The official said the program is watched by the Foreign Intelligence Surveillance Court, the Executive Branch, and Congress. The official said there are court-approved procedures to make sure only non-US people outside the US are targeted, and to reduce how much information about US persons is collected, kept, and shared by accident.
+
+The official said Congress recently approved the program again after hearings and debate. The official also said the information collected under this program is very important and is used to protect the nation from many kinds of threats.
