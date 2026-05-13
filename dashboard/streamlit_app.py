@@ -6,7 +6,9 @@ import hashlib
 import json
 import sys
 import uuid
+from collections.abc import Mapping
 from datetime import datetime
+from functools import partial
 from pathlib import Path
 
 import pandas as pd
@@ -232,6 +234,8 @@ def ensure_state(study_items: list[dict[str, object]]) -> None:
         st.session_state.current_story_index = 0
     if "participant_id" not in st.session_state:
         st.session_state.participant_id = uuid.uuid4().hex[:8]
+    if "submission_id" not in st.session_state:
+        st.session_state.submission_id = uuid.uuid4().hex
     if "study_responses" not in st.session_state:
         responses: dict[str, dict[str, object]] = {}
         for item in study_items:
@@ -248,8 +252,14 @@ def ensure_state(study_items: list[dict[str, object]]) -> None:
         st.session_state.study_responses = responses
     if "questionnaire_saved" not in st.session_state:
         st.session_state.questionnaire_saved = False
+    if "questionnaire_submitting" not in st.session_state:
+        st.session_state.questionnaire_submitting = False
     if "access_granted" not in st.session_state:
         st.session_state.access_granted = False
+    if "submission_error_messages" not in st.session_state:
+        st.session_state.submission_error_messages = []
+    if "questionnaire_draft" not in st.session_state:
+        st.session_state.questionnaire_draft = {}
 
 
 def get_access_codes() -> list[str]:
@@ -308,7 +318,7 @@ def get_google_service_account_info() -> dict[str, object] | None:
             return json.loads(raw)
         except json.JSONDecodeError:
             return None
-    if isinstance(raw, dict):
+    if isinstance(raw, Mapping):
         return dict(raw)
     return None
 
@@ -325,13 +335,17 @@ def get_gspread_client() -> gspread.Client | None:
         return None
 
 
-def append_dataframe_to_google_sheet(sheet_name: str, frame: pd.DataFrame) -> bool:
+def append_dataframe_to_google_sheet(sheet_name: str, frame: pd.DataFrame) -> tuple[bool, str]:
     if gspread is None:
-        return False
+        return False, "gspread_not_installed"
     sheet_id = get_google_sheet_id()
     client = get_gspread_client()
     if not sheet_id or client is None or frame.empty:
-        return False
+        if not sheet_id:
+            return False, "missing_google_sheet_id"
+        if client is None:
+            return False, "google_client_init_failed"
+        return False, "empty_frame"
     try:
         workbook = client.open_by_key(sheet_id)
         try:
@@ -351,15 +365,32 @@ def append_dataframe_to_google_sheet(sheet_name: str, frame: pd.DataFrame) -> bo
         if not existing_header:
             worksheet.append_row(frame.columns.tolist(), value_input_option="USER_ENTERED")
             existing_header = worksheet.row_values(1)
-        if existing_header != frame.columns.tolist():
-            return False
 
-        rows = frame.fillna("").astype(str).values.tolist()
+        combined_header = list(existing_header)
+        for column in frame.columns.tolist():
+            if column not in combined_header:
+                combined_header.append(column)
+        if combined_header != existing_header:
+            if worksheet.col_count < len(combined_header):
+                worksheet.add_cols(len(combined_header) - worksheet.col_count)
+            worksheet.update("A1", [combined_header])
+            existing_header = combined_header
+
+        aligned = frame.reindex(columns=existing_header, fill_value="")
+
+        if "submission_id" in existing_header:
+            submission_col = existing_header.index("submission_id") + 1
+            existing_ids = worksheet.col_values(submission_col)[1:]
+            frame_ids = set(aligned["submission_id"].astype(str).tolist())
+            if frame_ids and frame_ids.issubset(set(existing_ids)):
+                return True, "duplicate_skipped"
+
+        rows = aligned.fillna("").astype(str).values.tolist()
         if rows:
             worksheet.append_rows(rows, value_input_option="USER_ENTERED")
-        return True
-    except Exception:
-        return False
+        return True, "ok"
+    except Exception as exc:
+        return False, f"{type(exc).__name__}: {exc}"
 
 
 def save_story_response(story_key: str) -> None:
@@ -378,10 +409,56 @@ def save_story_response(story_key: str) -> None:
     st.session_state.study_responses = responses
 
 
+def save_questionnaire_draft() -> None:
+    draft = {
+        "q_name": st.session_state.get("q_name", ""),
+        "q_context": st.session_state.get("q_context", ""),
+    }
+    for item in QUESTIONNAIRE_ITEMS:
+        draft[f"questionnaire_{item['id']}"] = st.session_state.get(f"questionnaire_{item['id']}", "")
+    for item in OPEN_QUESTIONS:
+        draft[f"questionnaire_{item['id']}"] = st.session_state.get(f"questionnaire_{item['id']}", "")
+    st.session_state.questionnaire_draft = draft
+
+
+def hydrate_questionnaire_fields() -> None:
+    draft = st.session_state.get("questionnaire_draft", {})
+    for key, value in draft.items():
+        if key not in st.session_state or (not st.session_state.get(key) and value):
+            st.session_state[key] = value
+
+
+def validate_story_responses(study_items: list[dict[str, object]]) -> list[str]:
+    errors: list[str] = []
+    for item in study_items:
+        story_key = str(item["story_key"])
+        response = st.session_state.study_responses.get(story_key, {})
+        preferred = str(response.get("preferred_label", "")).strip()
+        reason = str(response.get("reason", "")).strip()
+        title = str(item["title"])
+        if not preferred:
+            errors.append(f"Choose a preferred rewritten version for '{title}'.")
+        if not reason:
+            errors.append(f"Explain why you chose that version for '{title}'.")
+    return errors
+
+
+def validate_questionnaire() -> list[str]:
+    errors: list[str] = []
+    for item in QUESTIONNAIRE_ITEMS:
+        if not str(st.session_state.get(f"questionnaire_{item['id']}", "")).strip():
+            errors.append(f"Answer question {item['id']}.")
+    for item in OPEN_QUESTIONS:
+        if not str(st.session_state.get(f"questionnaire_{item['id']}", "")).strip():
+            errors.append(f"Answer question {item['id']}.")
+    return errors
+
+
 def save_all_feedback(study_items: list[dict[str, object]]) -> Path:
     FEEDBACK_DIR.mkdir(parents=True, exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     participant_id = st.session_state.participant_id
+    submission_id = st.session_state.submission_id
 
     story_rows: list[dict[str, object]] = []
     for item in study_items:
@@ -394,6 +471,7 @@ def save_all_feedback(study_items: list[dict[str, object]]) -> Path:
         row = {
             "timestamp": timestamp,
             "participant_id": participant_id,
+            "submission_id": submission_id,
             "story_key": story_key,
             "story_title": item["title"],
             "preferred_label": response.get("preferred_label", ""),
@@ -409,6 +487,7 @@ def save_all_feedback(study_items: list[dict[str, object]]) -> Path:
     questionnaire_row = {
         "timestamp": timestamp,
         "participant_id": participant_id,
+        "submission_id": submission_id,
         "name_or_initials": st.session_state.get("q_name", ""),
         "teaching_context": st.session_state.get("q_context", ""),
     }
@@ -424,32 +503,48 @@ def save_all_feedback(study_items: list[dict[str, object]]) -> Path:
     story_df = pd.DataFrame(story_rows)
     questionnaire_df = pd.DataFrame([questionnaire_row])
 
-    story_sheet_ok = append_dataframe_to_google_sheet("teacher_story_reviews", story_df)
-    questionnaire_sheet_ok = append_dataframe_to_google_sheet("teacher_questionnaire", questionnaire_df)
-
-    if story_path.is_file():
-        story_df.to_csv(story_path, mode="a", index=False, header=False)
-    else:
-        story_df.to_csv(story_path, index=False)
-
+    duplicate_local = False
     if questionnaire_path.is_file():
-        questionnaire_df.to_csv(questionnaire_path, mode="a", index=False, header=False)
-    else:
-        questionnaire_df.to_csv(questionnaire_path, index=False)
+        try:
+            existing_questionnaire = pd.read_csv(questionnaire_path, usecols=["submission_id"])
+            duplicate_local = submission_id in existing_questionnaire["submission_id"].astype(str).tolist()
+        except Exception:
+            duplicate_local = False
+
+    story_sheet_ok, story_sheet_status = append_dataframe_to_google_sheet("teacher_story_reviews", story_df)
+    questionnaire_sheet_ok, questionnaire_sheet_status = append_dataframe_to_google_sheet("teacher_questionnaire", questionnaire_df)
+
+    if not duplicate_local:
+        if story_path.is_file():
+            story_df.to_csv(story_path, mode="a", index=False, header=False)
+        else:
+            story_df.to_csv(story_path, index=False)
+
+        if questionnaire_path.is_file():
+            questionnaire_df.to_csv(questionnaire_path, mode="a", index=False, header=False)
+        else:
+            questionnaire_df.to_csv(questionnaire_path, index=False)
 
     session_payload = {
         "timestamp": timestamp,
         "participant_id": participant_id,
+        "submission_id": submission_id,
         "study_items": study_items,
         "responses": st.session_state.study_responses,
         "questionnaire": questionnaire_row,
         "google_sheets": {
             "story_reviews_saved": story_sheet_ok,
+            "story_reviews_status": story_sheet_status,
             "questionnaire_saved": questionnaire_sheet_ok,
+            "questionnaire_status": questionnaire_sheet_status,
             "sheet_id_present": bool(get_google_sheet_id()),
+        },
+        "local_storage": {
+            "duplicate_skipped": duplicate_local,
         },
     }
     session_path.write_text(json.dumps(session_payload, indent=2, ensure_ascii=False), encoding="utf-8")
+    st.session_state.google_sheets_status = session_payload["google_sheets"]
     return session_path
 
 
@@ -551,13 +646,25 @@ def render_text_column(title: str, text: str) -> None:
 
 def hydrate_story_fields(story_key: str) -> None:
     saved = st.session_state.study_responses.get(story_key, {})
-    if f"preferred_{story_key}" not in st.session_state:
+    if f"preferred_{story_key}" not in st.session_state or (
+        not st.session_state.get(f"preferred_{story_key}") and saved.get("preferred_label")
+    ):
         st.session_state[f"preferred_{story_key}"] = saved.get("preferred_label", "")
-    if f"reason_{story_key}" not in st.session_state:
+    if f"reason_{story_key}" not in st.session_state or (
+        not st.session_state.get(f"reason_{story_key}") and saved.get("reason")
+    ):
         st.session_state[f"reason_{story_key}"] = saved.get("reason", "")
     for idx, flag in enumerate(saved.get("flags", [])):
-        st.session_state.setdefault(f"flag_phrase_{story_key}_{idx}", flag.get("phrase", ""))
-        st.session_state.setdefault(f"flag_comment_{story_key}_{idx}", flag.get("comment", ""))
+        phrase_key = f"flag_phrase_{story_key}_{idx}"
+        comment_key = f"flag_comment_{story_key}_{idx}"
+        if phrase_key not in st.session_state or (
+            not st.session_state.get(phrase_key) and flag.get("phrase")
+        ):
+            st.session_state[phrase_key] = flag.get("phrase", "")
+        if comment_key not in st.session_state or (
+            not st.session_state.get(comment_key) and flag.get("comment")
+        ):
+            st.session_state[comment_key] = flag.get("comment", "")
 
 
 def render_text_review(study_items: list[dict[str, object]]) -> None:
@@ -646,12 +753,14 @@ def render_text_review(study_items: list[dict[str, object]]) -> None:
         ["", *version_labels],
         key=f"preferred_{story_key}",
         format_func=lambda value: "Select one option" if value == "" else value,
+        on_change=partial(save_story_response, story_key),
     )
     st.text_area(
         "Why did you choose that version?",
         key=f"reason_{story_key}",
         height=120,
         placeholder="You can mention things like clarity, word choice, tone, or what felt easiest to understand.",
+        on_change=partial(save_story_response, story_key),
     )
 
     st.markdown("### Words or phrases you would still change")
@@ -663,12 +772,14 @@ def render_text_review(study_items: list[dict[str, object]]) -> None:
                 f"Word or phrase {flag_idx + 1}",
                 key=f"flag_phrase_{story_key}_{flag_idx}",
                 placeholder="Example: public interest",
+                on_change=partial(save_story_response, story_key),
             )
         with right:
             st.text_input(
                 f"Why does it stand out? {flag_idx + 1}",
                 key=f"flag_comment_{story_key}_{flag_idx}",
                 placeholder="Example: This phrase still feels too formal.",
+                on_change=partial(save_story_response, story_key),
             )
 
     render_nav_buttons("bottom")
@@ -676,16 +787,23 @@ def render_text_review(study_items: list[dict[str, object]]) -> None:
 
 def render_questionnaire(study_items: list[dict[str, object]]) -> None:
     render_scroll_anchor("questionnaire-top")
-    for item in study_items:
-        save_story_response(str(item["story_key"]))
+    hydrate_questionnaire_fields()
+
+    if st.session_state.get("questionnaire_submitting") and not st.session_state.get("questionnaire_saved"):
+        save_path = save_all_feedback(study_items)
+        st.session_state.questionnaire_saved = True
+        st.session_state.questionnaire_submitting = False
+        st.session_state.submission_error_messages = []
+        st.session_state.saved_path = str(save_path)
+        st.rerun()
 
     st.title("Final Questionnaire")
     st.markdown(
         "This last step asks about how easy the activity was and how comfortable you felt making your choices."
     )
 
-    st.text_input("Name or initials (optional)", key="q_name")
-    st.text_input("Teaching context or subject area (optional)", key="q_context")
+    st.text_input("Name or initials (optional)", key="q_name", on_change=save_questionnaire_draft)
+    st.text_input("Teaching context or subject area (optional)", key="q_context", on_change=save_questionnaire_draft)
 
     st.markdown("### Quick questions")
     for item in QUESTIONNAIRE_ITEMS:
@@ -694,6 +812,7 @@ def render_questionnaire(study_items: list[dict[str, object]]) -> None:
             list(LIKERT_OPTIONS.keys()),
             key=f"questionnaire_{item['id']}",
             format_func=lambda value: LIKERT_OPTIONS[value],
+            on_change=save_questionnaire_draft,
         )
 
     st.markdown("### Final comments")
@@ -702,24 +821,58 @@ def render_questionnaire(study_items: list[dict[str, object]]) -> None:
             item["prompt"],
             key=f"questionnaire_{item['id']}",
             height=110,
+            on_change=save_questionnaire_draft,
         )
+
+    if st.session_state.get("submission_error_messages"):
+        for message in st.session_state["submission_error_messages"]:
+            st.error(message)
 
     left, right = st.columns([1, 1])
     with left:
-        if st.button("Back to the texts", width="stretch"):
+        if st.button(
+            "Back to the texts",
+            width="stretch",
+            disabled=st.session_state.get("questionnaire_saved", False) or st.session_state.get("questionnaire_submitting", False),
+        ):
+            save_questionnaire_draft()
             st.session_state.current_page = "Text Review"
             st.session_state.scroll_target = "review-top"
             st.rerun()
     with right:
-        if st.button("Finish", type="primary", width="stretch"):
-            save_path = save_all_feedback(study_items)
-            st.session_state.questionnaire_saved = True
-            st.session_state.saved_path = str(save_path)
+        if st.button(
+            "Finish",
+            type="primary",
+            width="stretch",
+            disabled=st.session_state.get("questionnaire_saved", False) or st.session_state.get("questionnaire_submitting", False),
+        ):
+            save_questionnaire_draft()
+            story_errors = validate_story_responses(study_items)
+            questionnaire_errors = validate_questionnaire()
+            all_errors = story_errors + questionnaire_errors
+            if all_errors:
+                st.session_state.submission_error_messages = all_errors
+                st.rerun()
+            st.session_state.questionnaire_submitting = True
+            st.session_state.submission_error_messages = []
             st.rerun()
 
     if st.session_state.get("questionnaire_saved"):
         st.success("Thank you. Your responses have been saved.")
         st.caption(f"Saved to: {st.session_state.get('saved_path', '')}")
+        st.info("This session has already been submitted. Further submissions are disabled.")
+        google_status = st.session_state.get("google_sheets_status", {})
+        if google_status:
+            if google_status.get("story_reviews_saved") and google_status.get("questionnaire_saved"):
+                st.success("Google Sheets save: success.")
+            else:
+                st.warning(
+                    "Google Sheets save did not fully succeed. "
+                    f"Story reviews: {google_status.get('story_reviews_status', 'unknown')}. "
+                    f"Questionnaire: {google_status.get('questionnaire_status', 'unknown')}."
+                )
+    elif st.session_state.get("questionnaire_submitting"):
+        st.info("Submitting your responses. Please wait...")
 
 
 def main() -> None:

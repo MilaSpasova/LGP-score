@@ -1,5 +1,6 @@
 venv
 .env
+.streamlit/secrets.toml
 __pycache__/
 *.pyc
 # Local clone of OneStopEnglishCorpus (see onestop_english_exploration.ipynb)
