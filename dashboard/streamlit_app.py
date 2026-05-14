@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import subprocess
 import sys
 import uuid
 from collections.abc import Mapping
@@ -15,13 +16,41 @@ import pandas as pd
 import streamlit as st
 import streamlit.components.v1 as components
 GSPREAD_IMPORT_ERROR = ""
-try:
-    import gspread
-except ModuleNotFoundError:  # pragma: no cover - optional during local setup
-    import traceback
 
-    GSPREAD_IMPORT_ERROR = traceback.format_exc()
-    gspread = None  # type: ignore[assignment]
+
+def load_gspread_module():
+    try:
+        import gspread as gspread_module
+
+        return gspread_module, ""
+    except ModuleNotFoundError:
+        try:
+            subprocess.check_call(
+                [
+                    sys.executable,
+                    "-m",
+                    "pip",
+                    "install",
+                    "gspread>=6.0.0",
+                    "google-auth>=2.29.0",
+                ],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
+            import gspread as gspread_module
+
+            return gspread_module, ""
+        except Exception:  # pragma: no cover - deployment fallback
+            import traceback
+
+            return None, traceback.format_exc()
+    except Exception:  # pragma: no cover - surface unexpected import failures
+        import traceback
+
+        return None, traceback.format_exc()
+
+
+gspread, GSPREAD_IMPORT_ERROR = load_gspread_module()
 
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
