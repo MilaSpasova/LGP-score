@@ -1,0 +1,17 @@
+datasets>=2.14.0
+huggingface-hub>=0.16.0
+pandas>=2.0.0
+numpy>=1.24.0
+spacy>=3.7,<3.8
+sentence-transformers>=2.7,<3
+transformers>=4.39,<4.40
+ipykernel
+openai
+python-dotenv
+matplotlib
+seaborn
+ipywidgets
+openpyxl>=3.1.0
+streamlit>=1.35,<2
+gspread>=6.0.0
+google-auth>=2.29.0
