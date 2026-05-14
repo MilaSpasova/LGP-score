@@ -620,8 +620,24 @@ def render_scroll_anchor(anchor_id: str = "review-top") -> None:
               try {{
                 const parentDoc = window.parent.document;
                 const anchor = parentDoc.getElementById(anchorId);
+                const appView = parentDoc.querySelector('[data-testid="stAppViewContainer"]');
+                const mainSection = parentDoc.querySelector('section.main');
+                const mainBlock = parentDoc.querySelector('.main .block-container');
+
+                if (appView) {{
+                  appView.scrollTo({{ top: 0, behavior: 'auto' }});
+                }}
+                if (mainSection) {{
+                  mainSection.scrollTop = 0;
+                }}
+                if (mainBlock) {{
+                  mainBlock.scrollIntoView({{ behavior: 'auto', block: 'start' }});
+                }}
                 if (anchor) {{
                   anchor.scrollIntoView({{ behavior: 'auto', block: 'start' }});
+                }}
+                if (window.parent && window.parent.scrollTo) {{
+                  window.parent.scrollTo(0, 0);
                 }}
                 window.parent.location.hash = anchorId;
               }} catch (e) {{}}
@@ -630,6 +646,7 @@ def render_scroll_anchor(anchor_id: str = "review-top") -> None:
             setTimeout(scrollParentToAnchor, 50);
             setTimeout(scrollParentToAnchor, 150);
             setTimeout(scrollParentToAnchor, 300);
+            setTimeout(scrollParentToAnchor, 600);
             </script>
             """,
             height=0,
