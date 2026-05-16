@@ -202,11 +202,14 @@ def fetch_text(df: pd.DataFrame, *, story_key: str, variant: str) -> str:
 
 @st.cache_data(show_spinner=False)
 def build_study_items() -> list[dict[str, object]]:
-    bundled = load_bundled_study_items()
-    if bundled:
-        return bundled
-
     human_text, human_pairwise, few_text, few_pairwise, zero_text, zero_pairwise = load_data()
+    required_frames = [human_text, human_pairwise, few_text, few_pairwise, zero_text, zero_pairwise]
+    has_live_data = all(not frame.empty for frame in required_frames)
+    if not has_live_data:
+        bundled = load_bundled_study_items()
+        if bundled:
+            return bundled
+
     story_keys = select_study_story_keys(human_pairwise, few_pairwise, zero_pairwise, top_n=3)
 
     items: list[dict[str, object]] = []
