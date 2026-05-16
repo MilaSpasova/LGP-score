@@ -7,6 +7,7 @@ import json
 import subprocess
 import sys
 import uuid
+import re
 from collections.abc import Mapping
 from datetime import datetime
 from functools import partial
@@ -89,6 +90,19 @@ DEFAULT_FILES = {
 
 ANON_LABELS = ["Version A", "Version B", "Version C"]
 PAGE_OPTIONS = ["Home", "Text Review", "Questionnaire"]
+DISPLAY_TEXT_REPLACEMENTS = {
+    "Õ": "’",
+    "Ò": "“",
+    "Ó": "”",
+    "Ô": "‘",
+    "â€™": "’",
+    "â€œ": "“",
+    "â€": "”",
+    "â€˜": "‘",
+    "â€“": "–",
+    "â€”": "—",
+    "Ã": "–",
+}
 
 
 def read_csv(path: Path) -> pd.DataFrame:
@@ -101,6 +115,14 @@ def read_json(path: Path) -> dict[str, object]:
     if not path.is_file():
         return {}
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def clean_display_text(text: str) -> str:
+    cleaned = str(text).replace("\r", "\n")
+    for bad, good in DISPLAY_TEXT_REPLACEMENTS.items():
+        cleaned = cleaned.replace(bad, good)
+    cleaned = re.sub(r"\n{3,}", "\n\n", cleaned)
+    return cleaned
 
 
 @st.cache_data(show_spinner=False)
@@ -197,7 +219,7 @@ def fetch_text(df: pd.DataFrame, *, story_key: str, variant: str) -> str:
     row = df[(df["story_key"] == story_key) & (df["variant"] == variant)]
     if row.empty:
         return ""
-    return str(row.iloc[0]["text"])
+    return clean_display_text(str(row.iloc[0]["text"]))
 
 
 @st.cache_data(show_spinner=False)
@@ -687,6 +709,7 @@ def render_home(study_items: list[dict[str, object]]) -> None:
 
 
 def render_text_column(title: str, text: str) -> None:
+    text = clean_display_text(text)
     st.markdown(
         (
             "<div class='text-card'>"
