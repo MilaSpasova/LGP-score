@@ -77,6 +77,7 @@ except ModuleNotFoundError:
 
 OUTPUTS = ROOT / "outputs"
 FEEDBACK_DIR = OUTPUTS / "dashboard_feedback"
+DRAFTS_DIR = FEEDBACK_DIR / "drafts"
 STUDY_DATA_PATH = ROOT / "dashboard" / "study_data.json"
 
 DEFAULT_FILES = {
@@ -115,6 +116,58 @@ def read_json(path: Path) -> dict[str, object]:
     if not path.is_file():
         return {}
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def get_resume_token() -> str:
+    query_params = st.query_params
+    token = str(query_params.get("session", "")).strip()
+    if token:
+        return token
+    token = uuid.uuid4().hex
+    query_params["session"] = token
+    return token
+
+
+def get_draft_path(resume_token: str) -> Path:
+    return DRAFTS_DIR / f"{resume_token}.json"
+
+
+def read_draft_payload(resume_token: str) -> dict[str, object]:
+    return read_json(get_draft_path(resume_token))
+
+
+def write_draft_payload(payload: dict[str, object]) -> None:
+    resume_token = str(payload.get("resume_token", "")).strip()
+    if not resume_token:
+        return
+    DRAFTS_DIR.mkdir(parents=True, exist_ok=True)
+    get_draft_path(resume_token).write_text(
+        json.dumps(payload, indent=2, ensure_ascii=False),
+        encoding="utf-8",
+    )
+
+
+def save_session_draft(study_items: list[dict[str, object]]) -> None:
+    payload = {
+        "resume_token": st.session_state.get("resume_token", ""),
+        "participant_id": st.session_state.get("participant_id", ""),
+        "submission_id": st.session_state.get("submission_id", ""),
+        "current_page": st.session_state.get("current_page", "Home"),
+        "current_story_index": st.session_state.get("current_story_index", 0),
+        "access_granted": bool(st.session_state.get("access_granted", False)),
+        "questionnaire_saved": bool(st.session_state.get("questionnaire_saved", False)),
+        "questionnaire_submitting": bool(st.session_state.get("questionnaire_submitting", False)),
+        "study_responses": st.session_state.get("study_responses", {}),
+        "questionnaire_draft": st.session_state.get("questionnaire_draft", {}),
+        "study_story_keys": [str(item["story_key"]) for item in study_items],
+        "updated_at": datetime.now().isoformat(),
+    }
+    write_draft_payload(payload)
+
+
+def get_active_study_items() -> list[dict[str, object]]:
+    active = st.session_state.get("_study_items", [])
+    return active if isinstance(active, list) else []
 
 
 def clean_display_text(text: str) -> str:
@@ -282,42 +335,62 @@ def build_study_items() -> list[dict[str, object]]:
 
 
 def ensure_state(study_items: list[dict[str, object]]) -> None:
+    st.session_state["_study_items"] = study_items
+    resume_token = get_resume_token()
+    draft = read_draft_payload(resume_token)
     if "page" in st.session_state:
         del st.session_state["page"]
+    if "resume_token" not in st.session_state:
+        st.session_state.resume_token = resume_token
     if "current_page" not in st.session_state:
-        st.session_state.current_page = "Home"
+        st.session_state.current_page = str(draft.get("current_page", "Home") or "Home")
     if "scroll_target" not in st.session_state:
         st.session_state.scroll_target = ""
     if "current_story_index" not in st.session_state:
-        st.session_state.current_story_index = 0
+        try:
+            st.session_state.current_story_index = int(draft.get("current_story_index", 0) or 0)
+        except Exception:
+            st.session_state.current_story_index = 0
     if "participant_id" not in st.session_state:
-        st.session_state.participant_id = uuid.uuid4().hex[:8]
+        st.session_state.participant_id = str(draft.get("participant_id", "")).strip() or uuid.uuid4().hex[:8]
     if "submission_id" not in st.session_state:
-        st.session_state.submission_id = uuid.uuid4().hex
+        st.session_state.submission_id = str(draft.get("submission_id", "")).strip() or uuid.uuid4().hex
     if "study_responses" not in st.session_state:
+        saved_responses = draft.get("study_responses", {})
         responses: dict[str, dict[str, object]] = {}
         for item in study_items:
             story_key = str(item["story_key"])
+            existing = saved_responses.get(story_key, {}) if isinstance(saved_responses, dict) else {}
+            flags = existing.get("flags", []) if isinstance(existing, dict) else []
+            normalized_flags = []
+            for idx in range(3):
+                flag = flags[idx] if isinstance(flags, list) and idx < len(flags) and isinstance(flags[idx], dict) else {}
+                normalized_flags.append(
+                    {
+                        "phrase": str(flag.get("phrase", "")),
+                        "comment": str(flag.get("comment", "")),
+                    }
+                )
             responses[story_key] = {
-                "preferred_label": "",
-                "reason": "",
-                "flags": [
-                    {"phrase": "", "comment": ""},
-                    {"phrase": "", "comment": ""},
-                    {"phrase": "", "comment": ""},
-                ],
+                "preferred_label": str(existing.get("preferred_label", "")) if isinstance(existing, dict) else "",
+                "reason": str(existing.get("reason", "")) if isinstance(existing, dict) else "",
+                "flags": normalized_flags,
             }
         st.session_state.study_responses = responses
     if "questionnaire_saved" not in st.session_state:
-        st.session_state.questionnaire_saved = False
+        st.session_state.questionnaire_saved = bool(draft.get("questionnaire_saved", False))
     if "questionnaire_submitting" not in st.session_state:
         st.session_state.questionnaire_submitting = False
     if "access_granted" not in st.session_state:
-        st.session_state.access_granted = False
+        st.session_state.access_granted = bool(draft.get("access_granted", False))
     if "submission_error_messages" not in st.session_state:
         st.session_state.submission_error_messages = []
     if "questionnaire_draft" not in st.session_state:
-        st.session_state.questionnaire_draft = {}
+        saved_questionnaire_draft = draft.get("questionnaire_draft", {})
+        st.session_state.questionnaire_draft = (
+            dict(saved_questionnaire_draft) if isinstance(saved_questionnaire_draft, Mapping) else {}
+        )
+    st.session_state.current_story_index = max(0, min(st.session_state.current_story_index, len(study_items) - 1))
 
 
 def get_access_codes() -> list[str]:
@@ -351,6 +424,7 @@ def require_access_code() -> bool:
         if submitted:
             if code.strip() in codes:
                 st.session_state.access_granted = True
+                save_session_draft(get_active_study_items())
                 st.rerun()
             else:
                 st.error("That code is not correct. Please try again.")
@@ -466,6 +540,7 @@ def save_story_response(story_key: str) -> None:
         ],
     }
     st.session_state.study_responses = responses
+    save_session_draft(get_active_study_items())
 
 
 def save_questionnaire_draft() -> None:
@@ -478,6 +553,7 @@ def save_questionnaire_draft() -> None:
     for item in OPEN_QUESTIONS:
         draft[f"questionnaire_{item['id']}"] = st.session_state.get(f"questionnaire_{item['id']}", "")
     st.session_state.questionnaire_draft = draft
+    save_session_draft(get_active_study_items())
 
 
 def hydrate_questionnaire_fields() -> None:
@@ -705,6 +781,7 @@ def render_home(study_items: list[dict[str, object]]) -> None:
     )
     if st.button("Start the review", type="primary", width="stretch"):
         st.session_state.current_page = "Text Review"
+        save_session_draft(study_items)
         st.rerun()
 
 
@@ -776,6 +853,7 @@ def render_text_review(study_items: list[dict[str, object]]) -> None:
                     save_story_response(story_key)
                     st.session_state.current_story_index = max(0, idx - 1)
                     st.session_state.scroll_target = "review-top"
+                    save_session_draft(study_items)
                     st.rerun()
         with nav_mid:
             if idx < len(study_items) - 1:
@@ -788,6 +866,7 @@ def render_text_review(study_items: list[dict[str, object]]) -> None:
                     save_story_response(story_key)
                     st.session_state.current_story_index = min(len(study_items) - 1, idx + 1)
                     st.session_state.scroll_target = "review-top"
+                    save_session_draft(study_items)
                     st.rerun()
             else:
                 if st.button(
@@ -799,6 +878,7 @@ def render_text_review(study_items: list[dict[str, object]]) -> None:
                     save_story_response(story_key)
                     st.session_state.current_page = "Questionnaire"
                     st.session_state.scroll_target = "questionnaire-top"
+                    save_session_draft(study_items)
                     st.rerun()
         with nav_right:
             st.markdown("&nbsp;", unsafe_allow_html=True)
@@ -873,6 +953,7 @@ def render_questionnaire(study_items: list[dict[str, object]]) -> None:
         st.session_state.questionnaire_submitting = False
         st.session_state.submission_error_messages = []
         st.session_state.saved_path = str(save_path)
+        save_session_draft(study_items)
         st.rerun()
 
     st.title("Final Questionnaire")
@@ -917,6 +998,7 @@ def render_questionnaire(study_items: list[dict[str, object]]) -> None:
             save_questionnaire_draft()
             st.session_state.current_page = "Text Review"
             st.session_state.scroll_target = "review-top"
+            save_session_draft(study_items)
             st.rerun()
     with right:
         if st.button(
@@ -931,9 +1013,11 @@ def render_questionnaire(study_items: list[dict[str, object]]) -> None:
             all_errors = story_errors + questionnaire_errors
             if all_errors:
                 st.session_state.submission_error_messages = all_errors
+                save_session_draft(study_items)
                 st.rerun()
             st.session_state.questionnaire_submitting = True
             st.session_state.submission_error_messages = []
+            save_session_draft(study_items)
             st.rerun()
 
     if st.session_state.get("questionnaire_saved"):
