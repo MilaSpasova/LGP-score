@@ -55,11 +55,11 @@ If the tabs do not exist yet, the app creates them automatically.
 
 ## Input Files
 
-The deployed app uses the bundled file:
+The app first looks for the bundled file:
 
 - `dashboard/study_data.json`
 
-This file contains the three selected study passages and the anonymous rewritten versions, so the cloud deployment does not depend on the local `outputs/` directory.
+If that file is not present, it rebuilds the study set from the metric CSV files in `outputs/`. This keeps the cloud deployment simple while still allowing local regeneration from the thesis outputs.
 
 ## Feedback Storage
 

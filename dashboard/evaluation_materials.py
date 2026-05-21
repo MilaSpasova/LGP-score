@@ -9,7 +9,7 @@ TASKS = [
         "id": "T1",
         "title": "Read the original passage",
         "instruction": (
-            "Read the original passage, which is on an advaced level, so you understand the topic and the main ideas."
+            "Read the original passage first so you understand the topic and the main ideas."
         ),
     },
     {

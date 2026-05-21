@@ -30,10 +30,10 @@ LGP-score/
 
 Use the repo as four layers:
 - `run_onestop_english.py`: generation entrypoint for OpenRouter experiments
-- `analyze_thesis_metrics.py`, `rank_prompt_configs.py`, `summarize_thesis_results.py`: analysis and reporting entrypoints
+- `analyze_thesis_metrics.py`, `rank_prompt_configs.py`, `summarize_thesis_results.py`, `compute_statistical_tests.py`: analysis and reporting entrypoints
 - `lgp_pipeline/`: reusable local metric logic
 - `llm_api/`: provider clients and prompt templates
-- `dashboard/`: teacher-facing web UI for benchmark review, vocabulary inspection, live simplification, and questionnaire capture
+- `dashboard/`: teacher-facing web UI for benchmark review and questionnaire capture
 
 The similarly named older files are only compatibility wrappers so earlier commands still run:
 - `methodology_analysis.py`
@@ -112,8 +112,6 @@ venv\Scripts\streamlit run dashboard/streamlit_app.py
 
 The dashboard provides:
 - benchmark review with `Human Advanced`, `Human Elementary`, `Few-shot 0.5`, and `Zero-shot 0.0`
-- vocabulary review with retained / removed / added AVL terms
-- an optional live simplification page
 - an in-app teacher questionnaire
 - local CSV / JSON feedback capture in `outputs/dashboard_feedback`
 
@@ -231,6 +229,12 @@ python summarize_thesis_results.py `
   --output-dir outputs/summaries
 ```
 
+### Run inferential statistics
+
+```powershell
+python compute_statistical_tests.py
+```
+
 ## Methodology Mapping
 
 Primary thesis metrics:
@@ -254,4 +258,4 @@ The local pipeline is reproducible if you keep fixed:
 
 Remaining reproducibility risks:
 - OpenRouter models may still change behind the same model ID over time
-- the qualitative dashboard evaluation has not yet been completed, even though the dashboard and questionnaire are implemented
+- the teacher dashboard evidence is a small exploratory pilot rather than a large evaluation study

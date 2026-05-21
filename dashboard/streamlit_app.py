@@ -4,13 +4,13 @@ from __future__ import annotations
 
 import hashlib
 import json
-import subprocess
 import sys
 import uuid
 from collections.abc import Mapping
 from datetime import datetime
 from functools import partial
 from pathlib import Path
+from typing import Any
 
 import pandas as pd
 import streamlit as st
@@ -18,39 +18,19 @@ import streamlit.components.v1 as components
 GSPREAD_IMPORT_ERROR = ""
 
 
-def load_gspread_module():
+def try_import_gspread() -> tuple[Any | None, str]:
+    """Import gspread if available and return a readable failure message otherwise."""
     try:
         import gspread as gspread_module
 
         return gspread_module, ""
     except ModuleNotFoundError:
-        try:
-            subprocess.check_call(
-                [
-                    sys.executable,
-                    "-m",
-                    "pip",
-                    "install",
-                    "gspread>=6.0.0",
-                    "google-auth>=2.29.0",
-                ],
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL,
-            )
-            import gspread as gspread_module
-
-            return gspread_module, ""
-        except Exception:  # pragma: no cover - deployment fallback
-            import traceback
-
-            return None, traceback.format_exc()
+        return None, "gspread is not installed in the current environment."
     except Exception:  # pragma: no cover - surface unexpected import failures
-        import traceback
-
-        return None, traceback.format_exc()
+        return None, "Unexpected failure while importing gspread."
 
 
-gspread, GSPREAD_IMPORT_ERROR = load_gspread_module()
+gspread, GSPREAD_IMPORT_ERROR = try_import_gspread()
 
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
@@ -88,7 +68,6 @@ DEFAULT_FILES = {
 }
 
 ANON_LABELS = ["Version A", "Version B", "Version C"]
-PAGE_OPTIONS = ["Home", "Text Review", "Questionnaire"]
 
 
 def read_csv(path: Path) -> pd.DataFrame:
@@ -257,8 +236,6 @@ def build_study_items() -> list[dict[str, object]]:
 
 
 def ensure_state(study_items: list[dict[str, object]]) -> None:
-    if "page" in st.session_state:
-        del st.session_state["page"]
     if "current_page" not in st.session_state:
         st.session_state.current_page = "Home"
     if "scroll_target" not in st.session_state:
@@ -370,8 +347,8 @@ def get_gspread_client() -> gspread.Client | None:
 
 def append_dataframe_to_google_sheet(sheet_name: str, frame: pd.DataFrame) -> tuple[bool, str]:
     if gspread is None:
-        detail = GSPREAD_IMPORT_ERROR.strip().splitlines()[-1] if GSPREAD_IMPORT_ERROR.strip() else "gspread_not_installed"
-        return False, f"gspread_not_installed: {detail}"
+        detail = GSPREAD_IMPORT_ERROR.strip() or "gspread_not_installed"
+        return False, f"gspread_unavailable: {detail}"
     sheet_id = get_google_sheet_id()
     client = get_gspread_client()
     if not sheet_id or client is None or frame.empty:
@@ -583,7 +560,7 @@ def save_all_feedback(study_items: list[dict[str, object]]) -> Path:
 
 
 def apply_branding() -> None:
-    st.set_page_config(page_title="Teacher Text Review", page_icon="📝", layout="wide")
+    st.set_page_config(page_title="Teacher Text Review", page_icon="TT", layout="wide")
     st.markdown(
         """
         <style>
@@ -921,9 +898,10 @@ def main() -> None:
         st.header("Review Study")
         st.caption("Follow the steps in order.")
         current = st.session_state.current_page
-        st.markdown(f"{'➡️' if current == 'Home' else '1.'} Home")
-        st.markdown(f"{'➡️' if current == 'Text Review' else '2.'} Text Review")
-        st.markdown(f"{'➡️' if current == 'Questionnaire' else '3.'} Questionnaire")
+        marker = "->"
+        st.markdown(f"{marker if current == 'Home' else '1.'} Home")
+        st.markdown(f"{marker if current == 'Text Review' else '2.'} Text Review")
+        st.markdown(f"{marker if current == 'Questionnaire' else '3.'} Questionnaire")
         st.caption(f"Time needed: {ESTIMATED_TIME}")
 
     page = st.session_state.current_page
