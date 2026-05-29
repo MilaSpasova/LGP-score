@@ -119,7 +119,7 @@ def _filter_source_levels(df: pd.DataFrame, raw_levels: str) -> pd.DataFrame:
     if raw_levels.strip().lower() == "all":
         return df
     # The corpus loader exposes three aligned levels, but thesis experiments
-    # usually start from Advanced and generate a target Elementary version.
+    # start from Advanced and generate a target Elementary version.
     selected = {_normalize_level_name(chunk.strip()) for chunk in raw_levels.split(",") if chunk.strip()}
     return df[df["level"].isin(selected)].copy()
 
@@ -150,8 +150,6 @@ def cmd_batch(args: argparse.Namespace) -> int:
         source_id = int(r["index"])
         source_text = str(r["text"])
         level = str(r["level"])
-        # Keeping source and target levels separate makes the experimental
-        # setup explicit in the output CSV instead of baking assumptions into it.
         target_level = _normalize_level_name(args.target_level) if args.target_level else level
         level_id = int(r["level_id"])
         split = str(r["split"])
@@ -176,7 +174,7 @@ def cmd_batch(args: argparse.Namespace) -> int:
                 base_sleep_s=args.base_sleep_s,
                 text=source_text,
                 target_level=target_level,
-                strategy=args.strategy,  # type: ignore[arg-type]
+                strategy=args.strategy,  
                 model=args.openai_model,
                 temperature=args.temperature,
                 top_p=args.top_p,
@@ -210,7 +208,7 @@ def cmd_batch(args: argparse.Namespace) -> int:
                 base_sleep_s=args.base_sleep_s,
                 text=source_text,
                 target_level=target_level,
-                strategy=args.strategy,  # type: ignore[arg-type]
+                strategy=args.strategy,  
                 model=args.gemini_model,
                 temperature=args.temperature,
                 top_p=args.top_p,
@@ -279,7 +277,7 @@ def cmd_experiments(args: argparse.Namespace) -> int:
         story_id = str(r["story_id"]) if "story_id" in advanced.columns else None
         for strategy in strategies:
             for temperature in temperatures:
-                strategy_typed: PromptStrategy = strategy  # type: ignore[assignment]
+                strategy_typed: PromptStrategy = strategy  
                 # This grid is the reproducible prompt/temperature search used
                 # to decide which generation setup to carry into later analysis.
                 common = {

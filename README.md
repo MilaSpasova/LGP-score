@@ -16,11 +16,11 @@ LGP-score/
 |-- append_fk_mtld_metrics.py
 |-- setup_mrc_database.py
 |-- setup_onestop_english.py
-|-- methodology_analysis.py        # legacy wrapper
-|-- rank_prompt_experiments.py     # legacy wrapper
-|-- summarize_results.py           # legacy wrapper
-|-- FKandMTLD.py                   # legacy wrapper
-|-- setup_onestopenglish.py        # legacy wrapper
+|-- methodology_analysis.py        # legacy 
+|-- rank_prompt_experiments.py     # legacy 
+|-- summarize_results.py           # legacy 
+|-- FKandMTLD.py                   # legacy 
+|-- setup_onestopenglish.py        # legacy 
 |-- lgp_pipeline/
 |-- llm_api/
 |-- notebooks/
@@ -29,6 +29,7 @@ LGP-score/
 ```
 
 Use the repo as four layers:
+
 - `run_onestop_english.py`: generation entrypoint for OpenRouter experiments
 - `analyze_thesis_metrics.py`, `rank_prompt_configs.py`, `summarize_thesis_results.py`, `compute_statistical_tests.py`: analysis and reporting entrypoints
 - `lgp_pipeline/`: reusable local metric logic
@@ -36,36 +37,12 @@ Use the repo as four layers:
 - `dashboard/`: teacher-facing web UI for benchmark review and questionnaire capture
 
 The similarly named older files are only compatibility wrappers so earlier commands still run:
+
 - `methodology_analysis.py`
 - `rank_prompt_experiments.py`
 - `summarize_results.py`
 - `FKandMTLD.py`
 - `setup_onestopenglish.py`
-
-## File Audit
-
-Useful and active:
-- `run_onestop_english.py`: main experiment runner
-- `analyze_thesis_metrics.py`: core local analysis pipeline for Advanced, Elementary, and LLM texts
-- `rank_prompt_configs.py`: ranks prompt and temperature conditions
-- `summarize_thesis_results.py`: builds thesis-ready summary tables
-- `append_fk_mtld_metrics.py`: auxiliary script for adding FK and MTLD to legacy exported result files
-- `setup_mrc_database.py`: validates and previews the MRC resource
-- `setup_onestop_english.py`: canonical OneStopEnglish loader
-- `lgp_pipeline/`: preprocessing, psycholinguistics, Tier 2 proxy, text metrics, and SBERT
-- `llm_api/`: OpenRouter client layer and prompt templates
-- `notebooks/`: exploratory analysis only, not required for the pipeline
-
-Useful but legacy:
-- `methodology_analysis.py`
-- `rank_prompt_experiments.py`
-- `summarize_results.py`
-- `FKandMTLD.py`
-- `setup_onestopenglish.py`
-
-Not part of the project code:
-- `venv/`
-- `__pycache__/`
 
 ## Core Inputs
 
@@ -80,10 +57,12 @@ Optional input for the comparison stage. This is produced by `run_onestop_englis
 ## Main Outputs
 
 The main analysis script writes:
+
 - [outputs/methodology_text_metrics.csv](D:/Year-3-Uni/thesis/Code/LGP-score/outputs/methodology_text_metrics.csv:1)
 - [outputs/methodology_pairwise_comparisons.csv](D:/Year-3-Uni/thesis/Code/LGP-score/outputs/methodology_pairwise_comparisons.csv:1)
 
 `methodology_text_metrics.csv` contains one row per text variant with:
+
 - source metadata
 - local psycholinguistic metrics for human and LLM texts
 - `FK`
@@ -93,6 +72,7 @@ The main analysis script writes:
 - `tier2_proxy_token_ratio`
 
 `methodology_pairwise_comparisons.csv` contains one row per simplified-vs-original comparison with:
+
 - `delta_cli`
 - `delta_aoa`
 - `delta_concreteness`
@@ -111,6 +91,7 @@ venv\Scripts\streamlit run dashboard/streamlit_app.py
 ```
 
 The dashboard provides:
+
 - benchmark review with `Human Advanced`, `Human Elementary`, `Few-shot 0.5`, and `Zero-shot 0.0`
 - an in-app teacher questionnaire
 - local CSV / JSON feedback capture in `outputs/dashboard_feedback`
@@ -123,21 +104,6 @@ See [dashboard/README.md](D:/Year-3-Uni/thesis/Code/LGP-score/dashboard/README.m
 python setup_mrc_database.py
 python setup_onestop_english.py
 python run_onestop_english.py smoke
-```
-
-### OpenRouter setup
-
-Create a local `.env` file in the repo root with:
-
-```powershell
-OPENROUTER_API_KEY=sk-or-v1-your-real-key-here
-```
-
-Optional:
-
-```powershell
-OPENROUTER_HTTP_REFERER=https://your-project-url.example
-OPENROUTER_APP_TITLE=LGP-score
 ```
 
 ### Run prompt and temperature experiment
@@ -238,17 +204,20 @@ python compute_statistical_tests.py
 ## Methodology Mapping
 
 Primary thesis metrics:
+
 - `AoA`
 - `Concreteness`
 - `Imageability`
 - `Tier 2 proxy` from the AVL core list
 
 Supporting metrics:
+
 - `Flesch-Kincaid`
 - `MTLD`
 - `SBERT`
 
 The local pipeline is reproducible if you keep fixed:
+
 - corpus version
 - OpenRouter model IDs
 - prompt strategy
@@ -257,5 +226,6 @@ The local pipeline is reproducible if you keep fixed:
 - `seed`
 
 Remaining reproducibility risks:
+
 - OpenRouter models may still change behind the same model ID over time
-- the teacher dashboard evidence is a small exploratory pilot rather than a large evaluation study
+

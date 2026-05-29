@@ -1,4 +1,4 @@
-"""Legacy wrapper for the canonical summarize_thesis_results.py entrypoint."""
+"""legacy"""
 
 from summarize_thesis_results import main
 

@@ -5,7 +5,7 @@ import pandas as pd
 
 try:
     from datasets import load_dataset
-except ModuleNotFoundError as e:  # pragma: no cover
+except ModuleNotFoundError as e:  
     raise ModuleNotFoundError(
         "Missing dependency 'datasets'. Install project requirements first:\n"
         "  python -m pip install -r requirements.txt"
@@ -14,7 +14,7 @@ except ModuleNotFoundError as e:  # pragma: no cover
 
 MRC_DATASET_ID = "StephanAkkerman/MRC-psycholinguistic-database"
 
-# Map verbose MRC column names to shorter, analysis-friendly names.
+# Map MRC column names to shorter names.
 MRC_COLUMN_MAP: dict[str, str] = {
     "word": "word",
     "kf written frequency": "kf_freq",

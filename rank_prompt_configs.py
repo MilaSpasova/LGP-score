@@ -1,5 +1,5 @@
 from __future__ import annotations
-"""Rank prompt and temperature conditions from pilot experiment outputs."""
+"""Rank prompt and temperature conditions from experiment results."""
 
 import argparse
 from pathlib import Path

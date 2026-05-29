@@ -7,7 +7,7 @@ from collections import Counter
 try:
     import spacy
     from spacy.lang.en import English
-except ModuleNotFoundError:  # pragma: no cover
+except ModuleNotFoundError:  
     spacy = None
     English = None
 

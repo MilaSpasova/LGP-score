@@ -1,4 +1,4 @@
-"""Legacy wrapper for the canonical rank_prompt_configs.py entrypoint."""
+"""legacy"""
 
 from rank_prompt_configs import main
 

@@ -26,7 +26,7 @@ def try_import_gspread() -> tuple[Any | None, str]:
         return gspread_module, ""
     except ModuleNotFoundError:
         return None, "gspread is not installed in the current environment."
-    except Exception:  # pragma: no cover - surface unexpected import failures
+    except Exception: 
         return None, "Unexpected failure while importing gspread."
 
 
@@ -45,7 +45,7 @@ try:
         TASKS,
     )
 except ModuleNotFoundError:
-    from evaluation_materials import (  # type: ignore[no-redef]
+    from evaluation_materials import (  
         ESTIMATED_TIME,
         LIKERT_OPTIONS,
         OPEN_QUESTIONS,
@@ -163,7 +163,6 @@ def select_study_story_keys(
     merged["few_tier2_gap"] = (merged["few_tier2"] - merged["human_tier2"]).abs()
     merged["zero_tier2_gap"] = (merged["zero_tier2"] - merged["human_tier2"]).abs()
 
-    # MTLD is the primary selection target; Tier 2 differences add a smaller bonus.
     merged["selection_score"] = (
         merged[["few_mtld_gap", "zero_mtld_gap"]].mean(axis=1)
         + 50 * merged[["few_tier2_gap", "zero_tier2_gap"]].mean(axis=1)
@@ -477,7 +476,7 @@ def save_all_feedback(study_items: list[dict[str, object]]) -> Path:
         response = st.session_state.study_responses.get(story_key, {})
         version_map = {
             version["label"]: version["source"]
-            for version in item["versions"]  # type: ignore[index]
+            for version in item["versions"]     
         }
         row = {
             "timestamp": timestamp,
@@ -740,7 +739,7 @@ def render_text_review(study_items: list[dict[str, object]]) -> None:
     render_nav_buttons("top")
     st.write("")
 
-    version_labels = [version["label"] for version in item["versions"]]  # type: ignore[index]
+    version_labels = [version["label"] for version in item["versions"]]  
     selected_version_label = st.radio(
         "Choose which rewritten version to read on the right.",
         version_labels,
@@ -748,7 +747,7 @@ def render_text_review(study_items: list[dict[str, object]]) -> None:
         horizontal=True,
     )
     selected_version = next(
-        version for version in item["versions"] if version["label"] == selected_version_label  # type: ignore[index]
+        version for version in item["versions"] if version["label"] == selected_version_label  
     )
 
     col1, col2 = st.columns(2)

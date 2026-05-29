@@ -7,7 +7,7 @@ from typing import Any, Optional
 
 try:
     from openai import OpenAI
-except ModuleNotFoundError as e:  # pragma: no cover
+except ModuleNotFoundError as e: 
     raise ModuleNotFoundError(
         "Missing dependency 'openai'. Install project requirements first:\n"
         "  python -m pip install -r requirements.txt"
@@ -84,9 +84,6 @@ def chat_completion_text(
         create_kwargs["seed"] = seed
     if response_format is not None:
         create_kwargs["response_format"] = response_format
-    # OpenRouter may otherwise allocate an unnecessarily large default
-    # completion budget, which can trigger 402 credit-limit errors even for
-    # short simplification tasks.
     if max_tokens is not None:
         create_kwargs["max_tokens"] = max_tokens
     resp = client.chat.completions.create(**create_kwargs)

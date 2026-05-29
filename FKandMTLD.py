@@ -1,4 +1,4 @@
-"""Legacy wrapper for the canonical append_fk_mtld_metrics.py entrypoint."""
+"""legacy"""
 
 from append_fk_mtld_metrics import main
 

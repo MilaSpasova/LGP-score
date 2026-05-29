@@ -1,5 +1,5 @@
 from __future__ import annotations
-"""Run paired non-parametric statistical tests over the final thesis conditions."""
+"""Run paired non-parametric statistical tests over the final results."""
 
 from pathlib import Path
 

@@ -3,7 +3,7 @@ from __future__ import annotations
 try:
     from sentence_transformers import SentenceTransformer
     from sentence_transformers.util import cos_sim
-except ModuleNotFoundError as e:  # pragma: no cover
+except ModuleNotFoundError as e: 
     raise ModuleNotFoundError(
         "Missing dependency 'sentence-transformers'. Install project requirements first:\n"
         "  python -m pip install -r requirements.txt"

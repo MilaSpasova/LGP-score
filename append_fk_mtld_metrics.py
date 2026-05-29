@@ -1,5 +1,5 @@
 from __future__ import annotations
-"""Append FK and MTLD rows to a legacy exported results file."""
+"""legacy"""
 import argparse
 import csv
 from pathlib import Path

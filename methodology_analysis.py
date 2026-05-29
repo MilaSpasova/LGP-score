@@ -1,4 +1,4 @@
-"""Legacy wrapper for the canonical analyze_thesis_metrics.py entrypoint."""
+"""legacy"""
 
 from analyze_thesis_metrics import main
 

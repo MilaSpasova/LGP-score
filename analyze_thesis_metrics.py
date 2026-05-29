@@ -1,5 +1,5 @@
 from __future__ import annotations
-"""Run the thesis-local metric pipeline over human and optional LLM texts."""
+"""Run the metric pipeline over human and optional LLM texts."""
 
 import argparse
 import os
